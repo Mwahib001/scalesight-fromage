@@ -1,0 +1,1730 @@
+[
+  {
+    "scenario": "S0",
+    "week": 1,
+    "sku": "FR-MC",
+    "net": 240
+  },
+  {
+    "scenario": "S0",
+    "week": 1,
+    "sku": "FR-VB",
+    "net": 180
+  },
+  {
+    "scenario": "S0",
+    "week": 1,
+    "sku": "FR-SC",
+    "net": 120
+  },
+  {
+    "scenario": "S0",
+    "week": 2,
+    "sku": "FR-MC",
+    "net": 120
+  },
+  {
+    "scenario": "S0",
+    "week": 2,
+    "sku": "FR-VB",
+    "net": 90
+  },
+  {
+    "scenario": "S0",
+    "week": 2,
+    "sku": "FR-SC",
+    "net": 60
+  },
+  {
+    "scenario": "S0",
+    "week": 3,
+    "sku": "FR-MC",
+    "net": 1200
+  },
+  {
+    "scenario": "S0",
+    "week": 3,
+    "sku": "FR-VB",
+    "net": 1200
+  },
+  {
+    "scenario": "S0",
+    "week": 3,
+    "sku": "FR-SC",
+    "net": 1200
+  },
+  {
+    "scenario": "S0",
+    "week": 4,
+    "sku": "FR-MC",
+    "net": 1080
+  },
+  {
+    "scenario": "S0",
+    "week": 4,
+    "sku": "FR-VB",
+    "net": 1110
+  },
+  {
+    "scenario": "S0",
+    "week": 4,
+    "sku": "FR-SC",
+    "net": 1140
+  },
+  {
+    "scenario": "S0",
+    "week": 5,
+    "sku": "FR-MC",
+    "net": 960
+  },
+  {
+    "scenario": "S0",
+    "week": 5,
+    "sku": "FR-VB",
+    "net": 1020
+  },
+  {
+    "scenario": "S0",
+    "week": 5,
+    "sku": "FR-SC",
+    "net": 1080
+  },
+  {
+    "scenario": "S0",
+    "week": 6,
+    "sku": "FR-MC",
+    "net": 840
+  },
+  {
+    "scenario": "S0",
+    "week": 6,
+    "sku": "FR-VB",
+    "net": 930
+  },
+  {
+    "scenario": "S0",
+    "week": 6,
+    "sku": "FR-SC",
+    "net": 1020
+  },
+  {
+    "scenario": "S0",
+    "week": 7,
+    "sku": "FR-MC",
+    "net": 720
+  },
+  {
+    "scenario": "S0",
+    "week": 7,
+    "sku": "FR-VB",
+    "net": 840
+  },
+  {
+    "scenario": "S0",
+    "week": 7,
+    "sku": "FR-SC",
+    "net": 960
+  },
+  {
+    "scenario": "S0",
+    "week": 8,
+    "sku": "FR-MC",
+    "net": 600
+  },
+  {
+    "scenario": "S0",
+    "week": 8,
+    "sku": "FR-VB",
+    "net": 750
+  },
+  {
+    "scenario": "S0",
+    "week": 8,
+    "sku": "FR-SC",
+    "net": 900
+  },
+  {
+    "scenario": "S0",
+    "week": 9,
+    "sku": "FR-MC",
+    "net": 480
+  },
+  {
+    "scenario": "S0",
+    "week": 9,
+    "sku": "FR-VB",
+    "net": 660
+  },
+  {
+    "scenario": "S0",
+    "week": 9,
+    "sku": "FR-SC",
+    "net": 840
+  },
+  {
+    "scenario": "S0",
+    "week": 10,
+    "sku": "FR-MC",
+    "net": 360
+  },
+  {
+    "scenario": "S0",
+    "week": 10,
+    "sku": "FR-VB",
+    "net": 570
+  },
+  {
+    "scenario": "S0",
+    "week": 10,
+    "sku": "FR-SC",
+    "net": 780
+  },
+  {
+    "scenario": "S0",
+    "week": 11,
+    "sku": "FR-MC",
+    "net": 240
+  },
+  {
+    "scenario": "S0",
+    "week": 11,
+    "sku": "FR-VB",
+    "net": 480
+  },
+  {
+    "scenario": "S0",
+    "week": 11,
+    "sku": "FR-SC",
+    "net": 720
+  },
+  {
+    "scenario": "S0",
+    "week": 12,
+    "sku": "FR-MC",
+    "net": 120
+  },
+  {
+    "scenario": "S0",
+    "week": 12,
+    "sku": "FR-VB",
+    "net": 390
+  },
+  {
+    "scenario": "S0",
+    "week": 12,
+    "sku": "FR-SC",
+    "net": 660
+  },
+  {
+    "scenario": "S1",
+    "week": 1,
+    "sku": "FR-MC",
+    "net": 240
+  },
+  {
+    "scenario": "S1",
+    "week": 1,
+    "sku": "FR-VB",
+    "net": 180
+  },
+  {
+    "scenario": "S1",
+    "week": 1,
+    "sku": "FR-SC",
+    "net": 120
+  },
+  {
+    "scenario": "S1",
+    "week": 2,
+    "sku": "FR-MC",
+    "net": 120
+  },
+  {
+    "scenario": "S1",
+    "week": 2,
+    "sku": "FR-VB",
+    "net": 90
+  },
+  {
+    "scenario": "S1",
+    "week": 2,
+    "sku": "FR-SC",
+    "net": 60
+  },
+  {
+    "scenario": "S1",
+    "week": 3,
+    "sku": "FR-MC",
+    "net": 1200
+  },
+  {
+    "scenario": "S1",
+    "week": 3,
+    "sku": "FR-VB",
+    "net": 1200
+  },
+  {
+    "scenario": "S1",
+    "week": 3,
+    "sku": "FR-SC",
+    "net": 1200
+  },
+  {
+    "scenario": "S1",
+    "week": 4,
+    "sku": "FR-MC",
+    "net": 1080
+  },
+  {
+    "scenario": "S1",
+    "week": 4,
+    "sku": "FR-VB",
+    "net": 1110
+  },
+  {
+    "scenario": "S1",
+    "week": 4,
+    "sku": "FR-SC",
+    "net": 1140
+  },
+  {
+    "scenario": "S1",
+    "week": 5,
+    "sku": "FR-MC",
+    "net": 840
+  },
+  {
+    "scenario": "S1",
+    "week": 5,
+    "sku": "FR-VB",
+    "net": 900
+  },
+  {
+    "scenario": "S1",
+    "week": 5,
+    "sku": "FR-SC",
+    "net": 960
+  },
+  {
+    "scenario": "S1",
+    "week": 6,
+    "sku": "FR-MC",
+    "net": 690
+  },
+  {
+    "scenario": "S1",
+    "week": 6,
+    "sku": "FR-VB",
+    "net": 786
+  },
+  {
+    "scenario": "S1",
+    "week": 6,
+    "sku": "FR-SC",
+    "net": 882
+  },
+  {
+    "scenario": "S1",
+    "week": 7,
+    "sku": "FR-MC",
+    "net": 540
+  },
+  {
+    "scenario": "S1",
+    "week": 7,
+    "sku": "FR-VB",
+    "net": 672
+  },
+  {
+    "scenario": "S1",
+    "week": 7,
+    "sku": "FR-SC",
+    "net": 804
+  },
+  {
+    "scenario": "S1",
+    "week": 8,
+    "sku": "FR-MC",
+    "net": 390
+  },
+  {
+    "scenario": "S1",
+    "week": 8,
+    "sku": "FR-VB",
+    "net": 558
+  },
+  {
+    "scenario": "S1",
+    "week": 8,
+    "sku": "FR-SC",
+    "net": 726
+  },
+  {
+    "scenario": "S1",
+    "week": 9,
+    "sku": "FR-MC",
+    "net": 240
+  },
+  {
+    "scenario": "S1",
+    "week": 9,
+    "sku": "FR-VB",
+    "net": 444
+  },
+  {
+    "scenario": "S1",
+    "week": 9,
+    "sku": "FR-SC",
+    "net": 648
+  },
+  {
+    "scenario": "S1",
+    "week": 10,
+    "sku": "FR-MC",
+    "net": 90
+  },
+  {
+    "scenario": "S1",
+    "week": 10,
+    "sku": "FR-VB",
+    "net": 330
+  },
+  {
+    "scenario": "S1",
+    "week": 10,
+    "sku": "FR-SC",
+    "net": 570
+  },
+  {
+    "scenario": "S1",
+    "week": 11,
+    "sku": "FR-MC",
+    "net": -60
+  },
+  {
+    "scenario": "S1",
+    "week": 11,
+    "sku": "FR-VB",
+    "net": 216
+  },
+  {
+    "scenario": "S1",
+    "week": 11,
+    "sku": "FR-SC",
+    "net": 492
+  },
+  {
+    "scenario": "S1",
+    "week": 12,
+    "sku": "FR-MC",
+    "net": -210
+  },
+  {
+    "scenario": "S1",
+    "week": 12,
+    "sku": "FR-VB",
+    "net": 102
+  },
+  {
+    "scenario": "S1",
+    "week": 12,
+    "sku": "FR-SC",
+    "net": 414
+  },
+  {
+    "scenario": "S2",
+    "week": 1,
+    "sku": "FR-MC",
+    "net": 240
+  },
+  {
+    "scenario": "S2",
+    "week": 1,
+    "sku": "FR-VB",
+    "net": 180
+  },
+  {
+    "scenario": "S2",
+    "week": 1,
+    "sku": "FR-SC",
+    "net": 120
+  },
+  {
+    "scenario": "S2",
+    "week": 2,
+    "sku": "FR-MC",
+    "net": 120
+  },
+  {
+    "scenario": "S2",
+    "week": 2,
+    "sku": "FR-VB",
+    "net": 90
+  },
+  {
+    "scenario": "S2",
+    "week": 2,
+    "sku": "FR-SC",
+    "net": 60
+  },
+  {
+    "scenario": "S2",
+    "week": 3,
+    "sku": "FR-MC",
+    "net": 1200
+  },
+  {
+    "scenario": "S2",
+    "week": 3,
+    "sku": "FR-VB",
+    "net": 1200
+  },
+  {
+    "scenario": "S2",
+    "week": 3,
+    "sku": "FR-SC",
+    "net": 1200
+  },
+  {
+    "scenario": "S2",
+    "week": 4,
+    "sku": "FR-MC",
+    "net": 1080
+  },
+  {
+    "scenario": "S2",
+    "week": 4,
+    "sku": "FR-VB",
+    "net": 1110
+  },
+  {
+    "scenario": "S2",
+    "week": 4,
+    "sku": "FR-SC",
+    "net": 1140
+  },
+  {
+    "scenario": "S2",
+    "week": 5,
+    "sku": "FR-MC",
+    "net": 840
+  },
+  {
+    "scenario": "S2",
+    "week": 5,
+    "sku": "FR-VB",
+    "net": 900
+  },
+  {
+    "scenario": "S2",
+    "week": 5,
+    "sku": "FR-SC",
+    "net": 960
+  },
+  {
+    "scenario": "S2",
+    "week": 6,
+    "sku": "FR-MC",
+    "net": 690
+  },
+  {
+    "scenario": "S2",
+    "week": 6,
+    "sku": "FR-VB",
+    "net": 786
+  },
+  {
+    "scenario": "S2",
+    "week": 6,
+    "sku": "FR-SC",
+    "net": 882
+  },
+  {
+    "scenario": "S2",
+    "week": 7,
+    "sku": "FR-MC",
+    "net": 540
+  },
+  {
+    "scenario": "S2",
+    "week": 7,
+    "sku": "FR-VB",
+    "net": 672
+  },
+  {
+    "scenario": "S2",
+    "week": 7,
+    "sku": "FR-SC",
+    "net": 804
+  },
+  {
+    "scenario": "S2",
+    "week": 8,
+    "sku": "FR-MC",
+    "net": 390
+  },
+  {
+    "scenario": "S2",
+    "week": 8,
+    "sku": "FR-VB",
+    "net": 558
+  },
+  {
+    "scenario": "S2",
+    "week": 8,
+    "sku": "FR-SC",
+    "net": 726
+  },
+  {
+    "scenario": "S2",
+    "week": 9,
+    "sku": "FR-MC",
+    "net": 1440
+  },
+  {
+    "scenario": "S2",
+    "week": 9,
+    "sku": "FR-VB",
+    "net": 444
+  },
+  {
+    "scenario": "S2",
+    "week": 9,
+    "sku": "FR-SC",
+    "net": 648
+  },
+  {
+    "scenario": "S2",
+    "week": 10,
+    "sku": "FR-MC",
+    "net": 1290
+  },
+  {
+    "scenario": "S2",
+    "week": 10,
+    "sku": "FR-VB",
+    "net": 330
+  },
+  {
+    "scenario": "S2",
+    "week": 10,
+    "sku": "FR-SC",
+    "net": 570
+  },
+  {
+    "scenario": "S2",
+    "week": 11,
+    "sku": "FR-MC",
+    "net": 1140
+  },
+  {
+    "scenario": "S2",
+    "week": 11,
+    "sku": "FR-VB",
+    "net": 216
+  },
+  {
+    "scenario": "S2",
+    "week": 11,
+    "sku": "FR-SC",
+    "net": 492
+  },
+  {
+    "scenario": "S2",
+    "week": 12,
+    "sku": "FR-MC",
+    "net": 990
+  },
+  {
+    "scenario": "S2",
+    "week": 12,
+    "sku": "FR-VB",
+    "net": 102
+  },
+  {
+    "scenario": "S2",
+    "week": 12,
+    "sku": "FR-SC",
+    "net": 414
+  },
+  {
+    "scenario": "S3",
+    "week": 1,
+    "sku": "FR-MC",
+    "net": 240
+  },
+  {
+    "scenario": "S3",
+    "week": 1,
+    "sku": "FR-VB",
+    "net": 180
+  },
+  {
+    "scenario": "S3",
+    "week": 1,
+    "sku": "FR-SC",
+    "net": 120
+  },
+  {
+    "scenario": "S3",
+    "week": 2,
+    "sku": "FR-MC",
+    "net": 120
+  },
+  {
+    "scenario": "S3",
+    "week": 2,
+    "sku": "FR-VB",
+    "net": 90
+  },
+  {
+    "scenario": "S3",
+    "week": 2,
+    "sku": "FR-SC",
+    "net": 60
+  },
+  {
+    "scenario": "S3",
+    "week": 3,
+    "sku": "FR-MC",
+    "net": 1200
+  },
+  {
+    "scenario": "S3",
+    "week": 3,
+    "sku": "FR-VB",
+    "net": 1200
+  },
+  {
+    "scenario": "S3",
+    "week": 3,
+    "sku": "FR-SC",
+    "net": 1200
+  },
+  {
+    "scenario": "S3",
+    "week": 4,
+    "sku": "FR-MC",
+    "net": 1080
+  },
+  {
+    "scenario": "S3",
+    "week": 4,
+    "sku": "FR-VB",
+    "net": 1110
+  },
+  {
+    "scenario": "S3",
+    "week": 4,
+    "sku": "FR-SC",
+    "net": 1140
+  },
+  {
+    "scenario": "S3",
+    "week": 5,
+    "sku": "FR-MC",
+    "net": 840
+  },
+  {
+    "scenario": "S3",
+    "week": 5,
+    "sku": "FR-VB",
+    "net": 900
+  },
+  {
+    "scenario": "S3",
+    "week": 5,
+    "sku": "FR-SC",
+    "net": 960
+  },
+  {
+    "scenario": "S3",
+    "week": 6,
+    "sku": "FR-MC",
+    "net": 690
+  },
+  {
+    "scenario": "S3",
+    "week": 6,
+    "sku": "FR-VB",
+    "net": 786
+  },
+  {
+    "scenario": "S3",
+    "week": 6,
+    "sku": "FR-SC",
+    "net": 882
+  },
+  {
+    "scenario": "S3",
+    "week": 7,
+    "sku": "FR-MC",
+    "net": 540
+  },
+  {
+    "scenario": "S3",
+    "week": 7,
+    "sku": "FR-VB",
+    "net": 672
+  },
+  {
+    "scenario": "S3",
+    "week": 7,
+    "sku": "FR-SC",
+    "net": 804
+  },
+  {
+    "scenario": "S3",
+    "week": 8,
+    "sku": "FR-MC",
+    "net": 390
+  },
+  {
+    "scenario": "S3",
+    "week": 8,
+    "sku": "FR-VB",
+    "net": 558
+  },
+  {
+    "scenario": "S3",
+    "week": 8,
+    "sku": "FR-SC",
+    "net": 726
+  },
+  {
+    "scenario": "S3",
+    "week": 9,
+    "sku": "FR-MC",
+    "net": 1440
+  },
+  {
+    "scenario": "S3",
+    "week": 9,
+    "sku": "FR-VB",
+    "net": 1644
+  },
+  {
+    "scenario": "S3",
+    "week": 9,
+    "sku": "FR-SC",
+    "net": 1848
+  },
+  {
+    "scenario": "S3",
+    "week": 10,
+    "sku": "FR-MC",
+    "net": 1290
+  },
+  {
+    "scenario": "S3",
+    "week": 10,
+    "sku": "FR-VB",
+    "net": 1530
+  },
+  {
+    "scenario": "S3",
+    "week": 10,
+    "sku": "FR-SC",
+    "net": 1770
+  },
+  {
+    "scenario": "S3",
+    "week": 11,
+    "sku": "FR-MC",
+    "net": 1140
+  },
+  {
+    "scenario": "S3",
+    "week": 11,
+    "sku": "FR-VB",
+    "net": 1416
+  },
+  {
+    "scenario": "S3",
+    "week": 11,
+    "sku": "FR-SC",
+    "net": 1692
+  },
+  {
+    "scenario": "S3",
+    "week": 12,
+    "sku": "FR-MC",
+    "net": 990
+  },
+  {
+    "scenario": "S3",
+    "week": 12,
+    "sku": "FR-VB",
+    "net": 1302
+  },
+  {
+    "scenario": "S3",
+    "week": 12,
+    "sku": "FR-SC",
+    "net": 1614
+  },
+  {
+    "scenario": "S4",
+    "week": 1,
+    "sku": "FR-MC",
+    "net": 264
+  },
+  {
+    "scenario": "S4",
+    "week": 1,
+    "sku": "FR-VB",
+    "net": 198
+  },
+  {
+    "scenario": "S4",
+    "week": 1,
+    "sku": "FR-SC",
+    "net": 132
+  },
+  {
+    "scenario": "S4",
+    "week": 2,
+    "sku": "FR-MC",
+    "net": 168
+  },
+  {
+    "scenario": "S4",
+    "week": 2,
+    "sku": "FR-VB",
+    "net": 126
+  },
+  {
+    "scenario": "S4",
+    "week": 2,
+    "sku": "FR-SC",
+    "net": 84
+  },
+  {
+    "scenario": "S4",
+    "week": 3,
+    "sku": "FR-MC",
+    "net": 1272
+  },
+  {
+    "scenario": "S4",
+    "week": 3,
+    "sku": "FR-VB",
+    "net": 1254
+  },
+  {
+    "scenario": "S4",
+    "week": 3,
+    "sku": "FR-SC",
+    "net": 1236
+  },
+  {
+    "scenario": "S4",
+    "week": 4,
+    "sku": "FR-MC",
+    "net": 1176
+  },
+  {
+    "scenario": "S4",
+    "week": 4,
+    "sku": "FR-VB",
+    "net": 1182
+  },
+  {
+    "scenario": "S4",
+    "week": 4,
+    "sku": "FR-SC",
+    "net": 1188
+  },
+  {
+    "scenario": "S4",
+    "week": 5,
+    "sku": "FR-MC",
+    "net": 960
+  },
+  {
+    "scenario": "S4",
+    "week": 5,
+    "sku": "FR-VB",
+    "net": 990
+  },
+  {
+    "scenario": "S4",
+    "week": 5,
+    "sku": "FR-SC",
+    "net": 1020
+  },
+  {
+    "scenario": "S4",
+    "week": 6,
+    "sku": "FR-MC",
+    "net": 834
+  },
+  {
+    "scenario": "S4",
+    "week": 6,
+    "sku": "FR-VB",
+    "net": 894
+  },
+  {
+    "scenario": "S4",
+    "week": 6,
+    "sku": "FR-SC",
+    "net": 954
+  },
+  {
+    "scenario": "S4",
+    "week": 7,
+    "sku": "FR-MC",
+    "net": 708
+  },
+  {
+    "scenario": "S4",
+    "week": 7,
+    "sku": "FR-VB",
+    "net": 798
+  },
+  {
+    "scenario": "S4",
+    "week": 7,
+    "sku": "FR-SC",
+    "net": 888
+  },
+  {
+    "scenario": "S4",
+    "week": 8,
+    "sku": "FR-MC",
+    "net": 582
+  },
+  {
+    "scenario": "S4",
+    "week": 8,
+    "sku": "FR-VB",
+    "net": 702
+  },
+  {
+    "scenario": "S4",
+    "week": 8,
+    "sku": "FR-SC",
+    "net": 822
+  },
+  {
+    "scenario": "S4",
+    "week": 9,
+    "sku": "FR-MC",
+    "net": 456
+  },
+  {
+    "scenario": "S4",
+    "week": 9,
+    "sku": "FR-VB",
+    "net": 606
+  },
+  {
+    "scenario": "S4",
+    "week": 9,
+    "sku": "FR-SC",
+    "net": 756
+  },
+  {
+    "scenario": "S4",
+    "week": 10,
+    "sku": "FR-MC",
+    "net": 330
+  },
+  {
+    "scenario": "S4",
+    "week": 10,
+    "sku": "FR-VB",
+    "net": 510
+  },
+  {
+    "scenario": "S4",
+    "week": 10,
+    "sku": "FR-SC",
+    "net": 690
+  },
+  {
+    "scenario": "S4",
+    "week": 11,
+    "sku": "FR-MC",
+    "net": 204
+  },
+  {
+    "scenario": "S4",
+    "week": 11,
+    "sku": "FR-VB",
+    "net": 414
+  },
+  {
+    "scenario": "S4",
+    "week": 11,
+    "sku": "FR-SC",
+    "net": 624
+  },
+  {
+    "scenario": "S4",
+    "week": 12,
+    "sku": "FR-MC",
+    "net": 78
+  },
+  {
+    "scenario": "S4",
+    "week": 12,
+    "sku": "FR-VB",
+    "net": 318
+  },
+  {
+    "scenario": "S4",
+    "week": 12,
+    "sku": "FR-SC",
+    "net": 558
+  },
+  {
+    "scenario": "S5",
+    "week": 1,
+    "sku": "FR-MC",
+    "net": 216
+  },
+  {
+    "scenario": "S5",
+    "week": 1,
+    "sku": "FR-VB",
+    "net": 162
+  },
+  {
+    "scenario": "S5",
+    "week": 1,
+    "sku": "FR-SC",
+    "net": 108
+  },
+  {
+    "scenario": "S5",
+    "week": 2,
+    "sku": "FR-MC",
+    "net": 72
+  },
+  {
+    "scenario": "S5",
+    "week": 2,
+    "sku": "FR-VB",
+    "net": 54
+  },
+  {
+    "scenario": "S5",
+    "week": 2,
+    "sku": "FR-SC",
+    "net": 36
+  },
+  {
+    "scenario": "S5",
+    "week": 3,
+    "sku": "FR-MC",
+    "net": 1128
+  },
+  {
+    "scenario": "S5",
+    "week": 3,
+    "sku": "FR-VB",
+    "net": 1146
+  },
+  {
+    "scenario": "S5",
+    "week": 3,
+    "sku": "FR-SC",
+    "net": 1164
+  },
+  {
+    "scenario": "S5",
+    "week": 4,
+    "sku": "FR-MC",
+    "net": 984
+  },
+  {
+    "scenario": "S5",
+    "week": 4,
+    "sku": "FR-VB",
+    "net": 1038
+  },
+  {
+    "scenario": "S5",
+    "week": 4,
+    "sku": "FR-SC",
+    "net": 1092
+  },
+  {
+    "scenario": "S5",
+    "week": 5,
+    "sku": "FR-MC",
+    "net": 720
+  },
+  {
+    "scenario": "S5",
+    "week": 5,
+    "sku": "FR-VB",
+    "net": 810
+  },
+  {
+    "scenario": "S5",
+    "week": 5,
+    "sku": "FR-SC",
+    "net": 900
+  },
+  {
+    "scenario": "S5",
+    "week": 6,
+    "sku": "FR-MC",
+    "net": 546
+  },
+  {
+    "scenario": "S5",
+    "week": 6,
+    "sku": "FR-VB",
+    "net": 678
+  },
+  {
+    "scenario": "S5",
+    "week": 6,
+    "sku": "FR-SC",
+    "net": 810
+  },
+  {
+    "scenario": "S5",
+    "week": 7,
+    "sku": "FR-MC",
+    "net": 372
+  },
+  {
+    "scenario": "S5",
+    "week": 7,
+    "sku": "FR-VB",
+    "net": 546
+  },
+  {
+    "scenario": "S5",
+    "week": 7,
+    "sku": "FR-SC",
+    "net": 720
+  },
+  {
+    "scenario": "S5",
+    "week": 8,
+    "sku": "FR-MC",
+    "net": 198
+  },
+  {
+    "scenario": "S5",
+    "week": 8,
+    "sku": "FR-VB",
+    "net": 414
+  },
+  {
+    "scenario": "S5",
+    "week": 8,
+    "sku": "FR-SC",
+    "net": 630
+  },
+  {
+    "scenario": "S5",
+    "week": 9,
+    "sku": "FR-MC",
+    "net": 24
+  },
+  {
+    "scenario": "S5",
+    "week": 9,
+    "sku": "FR-VB",
+    "net": 282
+  },
+  {
+    "scenario": "S5",
+    "week": 9,
+    "sku": "FR-SC",
+    "net": 540
+  },
+  {
+    "scenario": "S5",
+    "week": 10,
+    "sku": "FR-MC",
+    "net": -150
+  },
+  {
+    "scenario": "S5",
+    "week": 10,
+    "sku": "FR-VB",
+    "net": 150
+  },
+  {
+    "scenario": "S5",
+    "week": 10,
+    "sku": "FR-SC",
+    "net": 450
+  },
+  {
+    "scenario": "S5",
+    "week": 11,
+    "sku": "FR-MC",
+    "net": -324
+  },
+  {
+    "scenario": "S5",
+    "week": 11,
+    "sku": "FR-VB",
+    "net": 18
+  },
+  {
+    "scenario": "S5",
+    "week": 11,
+    "sku": "FR-SC",
+    "net": 360
+  },
+  {
+    "scenario": "S5",
+    "week": 12,
+    "sku": "FR-MC",
+    "net": -498
+  },
+  {
+    "scenario": "S5",
+    "week": 12,
+    "sku": "FR-VB",
+    "net": -114
+  },
+  {
+    "scenario": "S5",
+    "week": 12,
+    "sku": "FR-SC",
+    "net": 270
+  },
+  {
+    "scenario": "S6",
+    "week": 1,
+    "sku": "FR-MC",
+    "net": 240
+  },
+  {
+    "scenario": "S6",
+    "week": 1,
+    "sku": "FR-VB",
+    "net": 180
+  },
+  {
+    "scenario": "S6",
+    "week": 1,
+    "sku": "FR-SC",
+    "net": 120
+  },
+  {
+    "scenario": "S6",
+    "week": 2,
+    "sku": "FR-MC",
+    "net": 120
+  },
+  {
+    "scenario": "S6",
+    "week": 2,
+    "sku": "FR-VB",
+    "net": 90
+  },
+  {
+    "scenario": "S6",
+    "week": 2,
+    "sku": "FR-SC",
+    "net": 60
+  },
+  {
+    "scenario": "S6",
+    "week": 3,
+    "sku": "FR-MC",
+    "net": 0
+  },
+  {
+    "scenario": "S6",
+    "week": 3,
+    "sku": "FR-VB",
+    "net": 0
+  },
+  {
+    "scenario": "S6",
+    "week": 3,
+    "sku": "FR-SC",
+    "net": 0
+  },
+  {
+    "scenario": "S6",
+    "week": 4,
+    "sku": "FR-MC",
+    "net": -120
+  },
+  {
+    "scenario": "S6",
+    "week": 4,
+    "sku": "FR-VB",
+    "net": -90
+  },
+  {
+    "scenario": "S6",
+    "week": 4,
+    "sku": "FR-SC",
+    "net": -60
+  },
+  {
+    "scenario": "S6",
+    "week": 5,
+    "sku": "FR-MC",
+    "net": 840
+  },
+  {
+    "scenario": "S6",
+    "week": 5,
+    "sku": "FR-VB",
+    "net": 900
+  },
+  {
+    "scenario": "S6",
+    "week": 5,
+    "sku": "FR-SC",
+    "net": 960
+  },
+  {
+    "scenario": "S6",
+    "week": 6,
+    "sku": "FR-MC",
+    "net": 690
+  },
+  {
+    "scenario": "S6",
+    "week": 6,
+    "sku": "FR-VB",
+    "net": 786
+  },
+  {
+    "scenario": "S6",
+    "week": 6,
+    "sku": "FR-SC",
+    "net": 882
+  },
+  {
+    "scenario": "S6",
+    "week": 7,
+    "sku": "FR-MC",
+    "net": 540
+  },
+  {
+    "scenario": "S6",
+    "week": 7,
+    "sku": "FR-VB",
+    "net": 672
+  },
+  {
+    "scenario": "S6",
+    "week": 7,
+    "sku": "FR-SC",
+    "net": 804
+  },
+  {
+    "scenario": "S6",
+    "week": 8,
+    "sku": "FR-MC",
+    "net": 390
+  },
+  {
+    "scenario": "S6",
+    "week": 8,
+    "sku": "FR-VB",
+    "net": 558
+  },
+  {
+    "scenario": "S6",
+    "week": 8,
+    "sku": "FR-SC",
+    "net": 726
+  },
+  {
+    "scenario": "S6",
+    "week": 9,
+    "sku": "FR-MC",
+    "net": 240
+  },
+  {
+    "scenario": "S6",
+    "week": 9,
+    "sku": "FR-VB",
+    "net": 444
+  },
+  {
+    "scenario": "S6",
+    "week": 9,
+    "sku": "FR-SC",
+    "net": 648
+  },
+  {
+    "scenario": "S6",
+    "week": 10,
+    "sku": "FR-MC",
+    "net": 90
+  },
+  {
+    "scenario": "S6",
+    "week": 10,
+    "sku": "FR-VB",
+    "net": 330
+  },
+  {
+    "scenario": "S6",
+    "week": 10,
+    "sku": "FR-SC",
+    "net": 570
+  },
+  {
+    "scenario": "S6",
+    "week": 11,
+    "sku": "FR-MC",
+    "net": -60
+  },
+  {
+    "scenario": "S6",
+    "week": 11,
+    "sku": "FR-VB",
+    "net": 216
+  },
+  {
+    "scenario": "S6",
+    "week": 11,
+    "sku": "FR-SC",
+    "net": 492
+  },
+  {
+    "scenario": "S6",
+    "week": 12,
+    "sku": "FR-MC",
+    "net": -210
+  },
+  {
+    "scenario": "S6",
+    "week": 12,
+    "sku": "FR-VB",
+    "net": 102
+  },
+  {
+    "scenario": "S6",
+    "week": 12,
+    "sku": "FR-SC",
+    "net": 414
+  },
+  {
+    "scenario": "S7",
+    "week": 1,
+    "sku": "FR-MC",
+    "net": 240
+  },
+  {
+    "scenario": "S7",
+    "week": 1,
+    "sku": "FR-VB",
+    "net": 180
+  },
+  {
+    "scenario": "S7",
+    "week": 1,
+    "sku": "FR-SC",
+    "net": 120
+  },
+  {
+    "scenario": "S7",
+    "week": 2,
+    "sku": "FR-MC",
+    "net": 120
+  },
+  {
+    "scenario": "S7",
+    "week": 2,
+    "sku": "FR-VB",
+    "net": 90
+  },
+  {
+    "scenario": "S7",
+    "week": 2,
+    "sku": "FR-SC",
+    "net": 60
+  },
+  {
+    "scenario": "S7",
+    "week": 3,
+    "sku": "FR-MC",
+    "net": 1200
+  },
+  {
+    "scenario": "S7",
+    "week": 3,
+    "sku": "FR-VB",
+    "net": 1200
+  },
+  {
+    "scenario": "S7",
+    "week": 3,
+    "sku": "FR-SC",
+    "net": 1200
+  },
+  {
+    "scenario": "S7",
+    "week": 4,
+    "sku": "FR-MC",
+    "net": 1080
+  },
+  {
+    "scenario": "S7",
+    "week": 4,
+    "sku": "FR-VB",
+    "net": 1110
+  },
+  {
+    "scenario": "S7",
+    "week": 4,
+    "sku": "FR-SC",
+    "net": 1140
+  },
+  {
+    "scenario": "S7",
+    "week": 5,
+    "sku": "FR-MC",
+    "net": 960
+  },
+  {
+    "scenario": "S7",
+    "week": 5,
+    "sku": "FR-VB",
+    "net": 1020
+  },
+  {
+    "scenario": "S7",
+    "week": 5,
+    "sku": "FR-SC",
+    "net": 1080
+  },
+  {
+    "scenario": "S7",
+    "week": 6,
+    "sku": "FR-MC",
+    "net": 840
+  },
+  {
+    "scenario": "S7",
+    "week": 6,
+    "sku": "FR-VB",
+    "net": 930
+  },
+  {
+    "scenario": "S7",
+    "week": 6,
+    "sku": "FR-SC",
+    "net": 1020
+  },
+  {
+    "scenario": "S7",
+    "week": 7,
+    "sku": "FR-MC",
+    "net": 720
+  },
+  {
+    "scenario": "S7",
+    "week": 7,
+    "sku": "FR-VB",
+    "net": 840
+  },
+  {
+    "scenario": "S7",
+    "week": 7,
+    "sku": "FR-SC",
+    "net": 960
+  },
+  {
+    "scenario": "S7",
+    "week": 8,
+    "sku": "FR-MC",
+    "net": 600
+  },
+  {
+    "scenario": "S7",
+    "week": 8,
+    "sku": "FR-VB",
+    "net": 750
+  },
+  {
+    "scenario": "S7",
+    "week": 8,
+    "sku": "FR-SC",
+    "net": 900
+  },
+  {
+    "scenario": "S7",
+    "week": 9,
+    "sku": "FR-MC",
+    "net": 360
+  },
+  {
+    "scenario": "S7",
+    "week": 9,
+    "sku": "FR-VB",
+    "net": 540
+  },
+  {
+    "scenario": "S7",
+    "week": 9,
+    "sku": "FR-SC",
+    "net": 720
+  },
+  {
+    "scenario": "S7",
+    "week": 10,
+    "sku": "FR-MC",
+    "net": 210
+  },
+  {
+    "scenario": "S7",
+    "week": 10,
+    "sku": "FR-VB",
+    "net": 426
+  },
+  {
+    "scenario": "S7",
+    "week": 10,
+    "sku": "FR-SC",
+    "net": 642
+  },
+  {
+    "scenario": "S7",
+    "week": 11,
+    "sku": "FR-MC",
+    "net": 60
+  },
+  {
+    "scenario": "S7",
+    "week": 11,
+    "sku": "FR-VB",
+    "net": 312
+  },
+  {
+    "scenario": "S7",
+    "week": 11,
+    "sku": "FR-SC",
+    "net": 564
+  },
+  {
+    "scenario": "S7",
+    "week": 12,
+    "sku": "FR-MC",
+    "net": -90
+  },
+  {
+    "scenario": "S7",
+    "week": 12,
+    "sku": "FR-VB",
+    "net": 198
+  },
+  {
+    "scenario": "S7",
+    "week": 12,
+    "sku": "FR-SC",
+    "net": 486
+  }
+]

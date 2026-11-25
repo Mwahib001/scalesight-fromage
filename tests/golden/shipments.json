@@ -1,0 +1,434 @@
+[
+  {
+    "week_start": "2026-10-05",
+    "account_id": "AC-01",
+    "sku_id": "FR-MC",
+    "shipped_packs": 48
+  },
+  {
+    "week_start": "2026-10-05",
+    "account_id": "AC-02",
+    "sku_id": "FR-MC",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-10-05",
+    "account_id": "AC-03",
+    "sku_id": "FR-MC",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-10-05",
+    "account_id": "AC-01",
+    "sku_id": "FR-VB",
+    "shipped_packs": 36
+  },
+  {
+    "week_start": "2026-10-05",
+    "account_id": "AC-02",
+    "sku_id": "FR-VB",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-10-05",
+    "account_id": "AC-03",
+    "sku_id": "FR-VB",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-10-05",
+    "account_id": "AC-01",
+    "sku_id": "FR-SC",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-10-05",
+    "account_id": "AC-02",
+    "sku_id": "FR-SC",
+    "shipped_packs": 12
+  },
+  {
+    "week_start": "2026-10-05",
+    "account_id": "AC-03",
+    "sku_id": "FR-SC",
+    "shipped_packs": 12
+  },
+  {
+    "week_start": "2026-10-12",
+    "account_id": "AC-01",
+    "sku_id": "FR-MC",
+    "shipped_packs": 54
+  },
+  {
+    "week_start": "2026-10-12",
+    "account_id": "AC-02",
+    "sku_id": "FR-MC",
+    "shipped_packs": 30
+  },
+  {
+    "week_start": "2026-10-12",
+    "account_id": "AC-03",
+    "sku_id": "FR-MC",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-10-12",
+    "account_id": "AC-01",
+    "sku_id": "FR-VB",
+    "shipped_packs": 36
+  },
+  {
+    "week_start": "2026-10-12",
+    "account_id": "AC-02",
+    "sku_id": "FR-VB",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-10-12",
+    "account_id": "AC-03",
+    "sku_id": "FR-VB",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-10-12",
+    "account_id": "AC-01",
+    "sku_id": "FR-SC",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-10-12",
+    "account_id": "AC-02",
+    "sku_id": "FR-SC",
+    "shipped_packs": 12
+  },
+  {
+    "week_start": "2026-10-12",
+    "account_id": "AC-03",
+    "sku_id": "FR-SC",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-10-19",
+    "account_id": "AC-01",
+    "sku_id": "FR-MC",
+    "shipped_packs": 54
+  },
+  {
+    "week_start": "2026-10-19",
+    "account_id": "AC-02",
+    "sku_id": "FR-MC",
+    "shipped_packs": 30
+  },
+  {
+    "week_start": "2026-10-19",
+    "account_id": "AC-03",
+    "sku_id": "FR-MC",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-10-19",
+    "account_id": "AC-01",
+    "sku_id": "FR-VB",
+    "shipped_packs": 42
+  },
+  {
+    "week_start": "2026-10-19",
+    "account_id": "AC-02",
+    "sku_id": "FR-VB",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-10-19",
+    "account_id": "AC-03",
+    "sku_id": "FR-VB",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-10-19",
+    "account_id": "AC-01",
+    "sku_id": "FR-SC",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-10-19",
+    "account_id": "AC-02",
+    "sku_id": "FR-SC",
+    "shipped_packs": 12
+  },
+  {
+    "week_start": "2026-10-19",
+    "account_id": "AC-03",
+    "sku_id": "FR-SC",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-10-26",
+    "account_id": "AC-01",
+    "sku_id": "FR-MC",
+    "shipped_packs": 60
+  },
+  {
+    "week_start": "2026-10-26",
+    "account_id": "AC-02",
+    "sku_id": "FR-MC",
+    "shipped_packs": 36
+  },
+  {
+    "week_start": "2026-10-26",
+    "account_id": "AC-03",
+    "sku_id": "FR-MC",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-10-26",
+    "account_id": "AC-01",
+    "sku_id": "FR-VB",
+    "shipped_packs": 42
+  },
+  {
+    "week_start": "2026-10-26",
+    "account_id": "AC-02",
+    "sku_id": "FR-VB",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-10-26",
+    "account_id": "AC-03",
+    "sku_id": "FR-VB",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-10-26",
+    "account_id": "AC-01",
+    "sku_id": "FR-SC",
+    "shipped_packs": 30
+  },
+  {
+    "week_start": "2026-10-26",
+    "account_id": "AC-02",
+    "sku_id": "FR-SC",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-10-26",
+    "account_id": "AC-03",
+    "sku_id": "FR-SC",
+    "shipped_packs": 12
+  },
+  {
+    "week_start": "2026-11-02",
+    "account_id": "AC-01",
+    "sku_id": "FR-MC",
+    "shipped_packs": 54
+  },
+  {
+    "week_start": "2026-11-02",
+    "account_id": "AC-02",
+    "sku_id": "FR-MC",
+    "shipped_packs": 30
+  },
+  {
+    "week_start": "2026-11-02",
+    "account_id": "AC-03",
+    "sku_id": "FR-MC",
+    "shipped_packs": 30
+  },
+  {
+    "week_start": "2026-11-02",
+    "account_id": "AC-01",
+    "sku_id": "FR-VB",
+    "shipped_packs": 42
+  },
+  {
+    "week_start": "2026-11-02",
+    "account_id": "AC-02",
+    "sku_id": "FR-VB",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-11-02",
+    "account_id": "AC-03",
+    "sku_id": "FR-VB",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-11-02",
+    "account_id": "AC-01",
+    "sku_id": "FR-SC",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-11-02",
+    "account_id": "AC-02",
+    "sku_id": "FR-SC",
+    "shipped_packs": 12
+  },
+  {
+    "week_start": "2026-11-02",
+    "account_id": "AC-03",
+    "sku_id": "FR-SC",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-11-09",
+    "account_id": "AC-01",
+    "sku_id": "FR-MC",
+    "shipped_packs": 60
+  },
+  {
+    "week_start": "2026-11-09",
+    "account_id": "AC-02",
+    "sku_id": "FR-MC",
+    "shipped_packs": 36
+  },
+  {
+    "week_start": "2026-11-09",
+    "account_id": "AC-03",
+    "sku_id": "FR-MC",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-11-09",
+    "account_id": "AC-01",
+    "sku_id": "FR-VB",
+    "shipped_packs": 42
+  },
+  {
+    "week_start": "2026-11-09",
+    "account_id": "AC-02",
+    "sku_id": "FR-VB",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-11-09",
+    "account_id": "AC-03",
+    "sku_id": "FR-VB",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-11-09",
+    "account_id": "AC-01",
+    "sku_id": "FR-SC",
+    "shipped_packs": 30
+  },
+  {
+    "week_start": "2026-11-09",
+    "account_id": "AC-02",
+    "sku_id": "FR-SC",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-11-09",
+    "account_id": "AC-03",
+    "sku_id": "FR-SC",
+    "shipped_packs": 12
+  },
+  {
+    "week_start": "2026-11-16",
+    "account_id": "AC-01",
+    "sku_id": "FR-MC",
+    "shipped_packs": 60
+  },
+  {
+    "week_start": "2026-11-16",
+    "account_id": "AC-02",
+    "sku_id": "FR-MC",
+    "shipped_packs": 36
+  },
+  {
+    "week_start": "2026-11-16",
+    "account_id": "AC-03",
+    "sku_id": "FR-MC",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-11-16",
+    "account_id": "AC-01",
+    "sku_id": "FR-VB",
+    "shipped_packs": 42
+  },
+  {
+    "week_start": "2026-11-16",
+    "account_id": "AC-02",
+    "sku_id": "FR-VB",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-11-16",
+    "account_id": "AC-03",
+    "sku_id": "FR-VB",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-11-16",
+    "account_id": "AC-01",
+    "sku_id": "FR-SC",
+    "shipped_packs": 30
+  },
+  {
+    "week_start": "2026-11-16",
+    "account_id": "AC-02",
+    "sku_id": "FR-SC",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-11-16",
+    "account_id": "AC-03",
+    "sku_id": "FR-SC",
+    "shipped_packs": 12
+  },
+  {
+    "week_start": "2026-11-23",
+    "account_id": "AC-01",
+    "sku_id": "FR-MC",
+    "shipped_packs": 60
+  },
+  {
+    "week_start": "2026-11-23",
+    "account_id": "AC-02",
+    "sku_id": "FR-MC",
+    "shipped_packs": 36
+  },
+  {
+    "week_start": "2026-11-23",
+    "account_id": "AC-03",
+    "sku_id": "FR-MC",
+    "shipped_packs": 30
+  },
+  {
+    "week_start": "2026-11-23",
+    "account_id": "AC-01",
+    "sku_id": "FR-VB",
+    "shipped_packs": 48
+  },
+  {
+    "week_start": "2026-11-23",
+    "account_id": "AC-02",
+    "sku_id": "FR-VB",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-11-23",
+    "account_id": "AC-03",
+    "sku_id": "FR-VB",
+    "shipped_packs": 24
+  },
+  {
+    "week_start": "2026-11-23",
+    "account_id": "AC-01",
+    "sku_id": "FR-SC",
+    "shipped_packs": 30
+  },
+  {
+    "week_start": "2026-11-23",
+    "account_id": "AC-02",
+    "sku_id": "FR-SC",
+    "shipped_packs": 18
+  },
+  {
+    "week_start": "2026-11-23",
+    "account_id": "AC-03",
+    "sku_id": "FR-SC",
+    "shipped_packs": 18
+  }
+]

@@ -1,0 +1,5548 @@
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+PRIVATE ILLUSTRATIVE CONCEPT
+
+
+
+
+ScaleSight / Fromage
+
+Minimum-Run & Retail
+Growth Planning Workspace
+
+Product, Data & UI Specification
+Developer Implementation Guide for Wahib
+
+Version 1.0 | Prepared 25 November 2026
+
+
+
+
+Analysis maintained by ScaleSight. Decisions owned by the
+brand.
+
+
+Private illustrative concept | Not an approved Fromage operating plan
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                     1
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+01 Contents
+Click any section title or use the PDF bookmarks. Exact UI copy is highlighted; all quantities and
+costs are illustrative.
+
+
+01 Contents                                                                                      2
+
+
+02 Document control and precedence                                                               4
+
+
+02.1 Authoritative implementation clarifications                                                 5
+
+
+03 Executive summary and demo purpose                                                            7
+
+
+04 Lead context and open questions                                                               8
+
+
+05 Service boundary and ownership                                                                9
+
+
+06 Source register and evidence classification                                                  10
+
+
+07 Calendar, units and master records                                                           12
+
+
+08 Complete operating datasets                                                                  15
+
+
+09 Calculation rules and relationships                                                          23
+
+
+10 Scenarios, results and feasibility                                                           26
+
+
+10.1 Independently verified scenario paths                                                      30
+
+
+11 Decision records and analytical story                                                        31
+
+
+12 Brand, shared layout and interactions                                                        32
+
+
+12.A Conditional copy and timeline reference                                                    39
+
+
+13.1 Planning Brief — /brief                                                                    41
+
+
+13.2 Demand & Stock — /demand-stock                                                             46
+
+
+13.3 Production Plan — /production                                                              51
+
+
+13.4 Retail Expansion — /expansion                                                              56
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                              2
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+13.5 Options & Cash — /options                            60
+
+
+14 Drawers and evidence access                            64
+
+
+14.1 Drawer behaviour and navigation                      67
+
+
+15 Managed review and demonstration flows                 68
+
+
+16 Implementation architecture and validation gates       70
+
+
+17 Source-preservation appendices                         72
+
+
+17.A Expanded shipment records                            73
+
+
+17.B Complete weekly net projections                      76
+
+
+17.C Full physical-stock and backlog ledger               87
+
+
+17.D Phase-by-phase section crosswalk                    104
+
+
+18 Real-client confirmation checklist                    106
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0        3
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+02 Document control and precedence
+ Field                            Value
+
+ Document                         ScaleSight / Fromage - Product, Data & UI Specification
+
+ Version / prepared               1.0 / 25 November 2026
+
+ Audience                         Wahib, developer; ScaleSight, analytical owner
+
+ Status                           Private illustrative implementation baseline; not client approved
+
+ Dataset                          FROMAGE-P1-v1.0
+
+ Inputs reviewed                  Complete creation prompt; supplied Phase 1 and Phase 2; Fishwife
+                                  structural reference
+
+
+Authority: explicit implementation addendum, then Phase 1 data/formulas, Phase 2 UI/copy,
+expanded records, and Fishwife structure only. The separately attached phases match the
+embedded operating and UI content; differences are tracking URLs and completion notes, with
+no additional operating requirements.
+
+Public-source checks are recorded from the supplied research session dated 25 November 2026.
+This document does not represent a fresh verification. All operating dates, values and scenario
+results remain illustrative.
+
+How to read this guide. Pale pink blocks headed EXACT UI COPY contain literal in-app text.
+Other paragraphs, formula blocks, tables and implementation contracts are developer
+specifications. Named copy tables in route sections are also literal UI requirements.
+Authoritative clarifications below govern wording in all later sections, including preserved phase
+material.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                   4
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+02.1 Authoritative implementation
+clarifications
+A. Planning-buffer warnings W9 Chocolate and W11 Vanilla mean the first relevant breach
+AFTER the initial receipt. Opening stock in W1/W2 is already below a two-week buffer in some
+cases. Do not call W9 the first-ever breach. Use 'Post-receipt buffer breach' in detail tables. The
+initial stock bridge remains visible; never imply all initial buffers were met.
+
+B. 'First unmet requirement Chocolate W11' describes baseline S1. In S6 the first shortfall is W4
+across three flavours. In S5 Chocolate first shortfall W10, Vanilla W12. All dynamic copy must
+follow the active case.
+
+C. All actual physical stock is nonnegative. Net stock may be negative; label it 'net stock
+position'. Negative net is outstanding modelled requirement, not lost sales. Do not sum physical
+surplus and backlog into one availability KPI that hides flavour shortages.
+
+D. Safety-stock policy uses strict '<', not '<='. Forecast stress ranges are sensitivity cases, not
+probability intervals.
+
+E. Six-week repeat lead time means W3 opening booking -> W9 opening usable receipt. Initial
+production was arranged before the snapshot; W1 is a scheduled deposit milestone, not its
+six-week booking date. No historical booking date needs to be invented.
+
+F. Manufacturer allows separate flavour repeats is an explicit SYNTHETIC feasibility assumption.
+If false, S2 is unavailable; other scenario outputs are not automatically recomputed into a
+different optimum. MOQ = 1,200 packs per flavour and increment = 6. Max receipt-slot volume
+= 3,600 packs. No live supplier slot is claimed reserved.
+
+G. Forecast quantities are weekly analytical requirements, not individual executable orders. The
+lower/higher cases can contain non-case multiples; a case-rounded dispatch schedule is not
+modelled. Current explicit orders and proposed production quantities use case multiples. Do not
+claim order-level packing feasibility for forecast totals.
+
+H. Scenario presets replace the full active input set. Do not combine independent switches into
+uncalculated combinations. Feasibility toggle only tests whether S2 is allowed. Primary option
+comparison explicitly compares S1/S2/S3 under central demand and W5 opening, regardless of
+a separately inspected stress case.
+
+I. Page 3's 'Preview Chocolate-only repeat' loads S2. 'Compare repeating all three' navigates to
+the S1/S2/S3 comparison. Page 4 opening-date choice loads S0, S1 or S7 and resets earlier
+changes. Label this reset visibly. Account filter affects historical shipments only.
+
+J. Backlog carry-forward is a modelling convention, not a claim that retailers tolerate late
+deliveries. Existing-account vs expansion service allocation would require demand-class backlog
+records. The PDF may describe the proposed priority policy, but must not publish account/class
+service KPIs without an implemented priority ledger. Aggregate per-SKU backlog outputs below
+are canonical.
+
+K. No shelf-life, storage capacity, cash balance, margin, tax, delivery penalties, revenue or
+actual savings claim may be inferred. Storage proxy is a comparison based on weekly closing
+physical stock, not a vendor invoice; lower cost during shortage is not success.
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                   5
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+L. The official website source contained pink #E60080, cream #FFFFE6 and warm yellow
+#F9DC78. Workspace role assignments and utility colours are proposed design choices, not
+official guidelines. No licensed official font was established. Use Manrope/Inter as proposed
+fonts, suitable fallbacks if unavailable. Do not download proprietary font assets merely because
+the website exposes them. Official logo unavailable -> plain text Fromage, no recreated logo.
+Public product imagery is optional for the private concept and must not block creation.
+
+M. Product selection, accounts and operating rows are illustrative. Public catalogue flavours CC
+and LC have null operating values, not zero. Real retailer names may appear in source context,
+never assigned synthetic sales or shortages. No partnership/client endorsement is implied.
+
+N. Public sources were checked in the research session; do not present this PDF's generation
+date as a fresh source verification. Source page assets, prices and dates can change. No new
+browsing is required; if undertaken, record factual changes separately and do not silently
+rewrite fixture numbers.
+
+O. Forecast-consumption rule is deliberately grouped by SKU/week: max(forecast, confirmed
+orders), then add explicit prospective opening and recurring expansion demand. Do not add
+confirmed orders a second time or subtract allocated stock twice.
+
+P. Receipt-time peak, not closing-stock peak, is used for capacity checks. S1 and S2 peak 3,870
+packs; S3 peak 5,274; assumed capacity 6,000. Full stock paths and per-SKU backlogs must
+reconcile with fixture.
+
+Q. Published pack format is three 108ml pops. Six packs per case and 1,200-pack MOQ are
+synthetic. Currency CAD; base unit retail pack. Do not confuse pops, packs and cases.
+
+R. A proposed review means analysis for discussion, not an approved transaction. No fake
+specialist approval, integrations, live feeds, placed orders, sent reports, customer quotes or
+previous client meetings.
+
+S. Analytical conclusion: S2 is worth reviewing under stated assumptions. It is not a universal
+optimal plan: forecast beyond W12, actual lead times, seasonality, commercial terms and
+independent-run feasibility remain open.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                6
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+03 Executive summary and demo
+purpose
+The central planning question is:
+
+  ANALYTICAL NOTE
+
+
+  When manufacturing minimums largely determine the first run, how can Fromage
+  assess what that stock supports, protect existing retail commitments and prepare
+  the next production decision?
+
+
+The demo must connect demand evidence, forecasts, production constraints, retail expansion
+and cash. All pages must use the same underlying records and calculations.
+
+Build five analytical routes around a minimum-led initial run and a prospective ten-store
+opening. The default S1 case has 210 Chocolate packs outstanding at W12. S2 adds 1,200
+Chocolate packs at W9 for CAD 4,800, clearing that modelled gap through W12. S3 clears it too,
+with CAD 10,320 more production commitment and 2,400 more ending packs than S2. S2 is
+worth reviewing only if separate flavour runs are feasible.
+
+The demonstration is maintained analysis for discussion. It is neither an approved Fromage plan
+nor a system integration. Evidence, constraints, assumptions, stock paths and payments must
+remain inspectable.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           7
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+04 Lead context and open questions
+Confirmed conversation facts and outstanding questions
+From Fiona’s supplied replies:
+
+ ID            Confirmed information                       Demo consequence
+
+ CF-01         Initial co-manufactured range will reduce   Model three flavours; selection remains
+               from five flavours to three.                illustrative.
+
+ CF-02         Co-manufacturing options are limited.       Respect manufacturing constraints.
+
+ CF-03         Minimum quantities will drive initial       Minimum structure is a primary model
+               production decisions.                       input.
+
+ CF-04         Fromage already sells in BC retail.         Include existing-account replenishment.
+
+ CF-05         Customer feedback is important to them.     Include qualitative evidence without
+                                                           treating it as a numerical forecast.
+
+
+The following remain unknown:
+
+• Which three flavours they selected.
+
+• Whether the minimum applies per flavour, per batch or across the full run.
+
+• Whether subsequent flavours can be produced separately.
+
+• Whether the first run is booked, completed or still being arranged.
+
+• Current stock, order book and manufacturing lead times.
+
+• Retailer sell-through availability.
+
+• Pack/case configuration under the new arrangement.
+
+• Costs, payment terms, freezer capacity and usable shelf life.
+
+• Their existing planning tools and division of responsibilities.
+
+Demo assumption: separate flavour runs are available. The interface must expose this
+assumption because it materially changes the recommendation.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                  8
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+05 Service boundary and ownership
+ScaleSight maintains the analysis, investigates changes and prepares a weekly brief.
+Fiona/Nuala supply business context and own commercial approval. Fromage and its partners
+execute through existing arrangements. No existing planning software or current workflow has
+been established; do not claim to replace one.
+
+The workspace presents the service. It must never imply an actual specialist approval,
+connected client feed, placed order, sent report or prior review. Review status is
+ILLUSTRATIVE_ANALYSIS_NOT_CLIENT_APPROVED. The commercial boundary is quantities,
+timing and cash implications for review.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                            9
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+06 Source register and evidence
+classification
+Evidence boundaries
+Public information establishes business context. It does not reveal Fromage’s
+internal operating data.
+
+Production quantities, costs, stock, sales history, retailer orders, lead times and payment terms
+below are deliberately synthetic. They are complete demo inputs, not estimates of Fromage’s
+actual business.
+
+Use these classifications throughout:
+
+ Code                   Classification                 Meaning
+
+ PUBLIC                 Public fact                    Supported by a named public source.
+
+ THREAD                 Founder-confirmed              Fiona stated it in the supplied conversation.
+
+ SYNTHETIC              Illustrative operating input   Created for this demo.
+
+ DERIVED                Calculated output              Produced from the canonical inputs and formulas.
+
+ INTERPRETATION         Proposed analytical            Explains the output and conditions attached to it.
+                        conclusion
+
+ UNKNOWN                Not established                Requires confirmation; never silently fill with a
+                                                       company claim.
+
+
+Every operating table, forecast and scenario should carry:
+
+  ANALYTICAL NOTE
+
+
+  Illustrative operating data. Not Fromage’s actual sales, costs or production plan.
+
+
+A synthetic order labelled “confirmed” means confirmed within the illustrative scenario,
+not confirmed by Fiona.
+
+
+Public-source register
+The supplied research session records checks on 25 November 2026; this is not a new
+verification by this PDF. Search indexes can contain older snapshots; they do not establish exact
+present-day operational status.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                         10
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ ID         Source                Supported context                     Restrictions
+
+ SRC-0      Fromage               Cottage-cheese frozen pops, five      No internal sales, stock or
+ 1          website               publicly displayed flavours and       production quantities.
+                                  retail positioning.
+
+ SRC-0      Fiona’s LinkedIn      Founder identity and public           Indexed posts may be older; no
+ 2                                co-manufacturing/growth               assumed current production date.
+                                  discussion.
+
+ SRC-0      Nuala’s LinkedIn      Co-founder identity and public        No assumption that her expertise
+ 3                                brand/funding activity.               excludes a need for analytical
+                                                                        support.
+
+ SRC-0      CanadianSME           Founder backgrounds, cart origins     Published August 2026; intentions
+ 4          founder               and stated intention to use funding   are not confirmation of current
+            interview             for co-manufacturing and              execution.
+                                  expansion beyond BC.
+
+ SRC-0      Mastercard            Fromage’s inclusion among 2026        Funding is not a proxy for available
+ 5          recipients            recipients.                           cash or affordability.
+
+ SRC-0      Aura: Vanilla         Public product listing and 3 × 108    No wholesale price, sell-through or
+ 6          Bean                  ml retail format.                     store count inference.
+
+ SRC-0      Aura: frozen          Listings across the Fromage range.    Availability badges do not diagnose
+ 7          desserts                                                    demand or supply problems.
+
+ SRC-0      Fresh St. Market      Another public retail listing.        Its format description does not
+ 8          listing                                                     override the demo’s explicitly
+                                                                        selected unit convention.
+
+
+The brand and retailer sources support the product context and retail presence.
+fromageprotein.com The founder interview and Mastercard support the
+funding/co-manufacturing context, without establishing the current run’s terms. CanadianSME
+LinkedIn search results also surface founder activity around growing the brand and
+co-manufacturing. LinkedIn
+
+Do not add grant money to the demo cash model. No cash balance or funding receipt date
+has been supplied.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                            11
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+07 Calendar, units and master records
+Canonical planning calendar
+Use a fixed illustrative timeline. Do not make dates move whenever the demo opens.
+
+ Field                                                Canonical value
+
+ Dataset version                                      FROMAGE-P1-v1.0
+
+ Illustrative planning snapshot                       30 November 2026, before opening transactions
+
+ Historical period                                    Eight complete weeks, 5 October–29 November 2026
+
+ Forward horizon                                      Twelve weeks
+
+ Operational timezone                                 America/Vancouver
+
+ Currency                                             CAD
+
+ Base inventory unit                                  One retail pack
+
+ Retail pack                                          Three pops, each 108 ml
+
+ Shipping case                                        Six retail packs; synthetic
+
+ Planning refresh                                     Weekly
+
+ First incoming run                                   Opening of W3
+
+ Proposed selective repeat                            Opening of W9
+
+ All operating dates                                  Synthetic
+
+
+
+ Week                                           Week commencing
+
+ W1                                             30 Nov 2026
+
+ W2                                             7 Dec 2026
+
+ W3                                             14 Dec 2026
+
+ W4                                             21 Dec 2026
+
+ W5                                             28 Dec 2026
+
+ W6                                             4 Jan 2027
+
+ W7                                             11 Jan 2027
+
+ W8                                             18 Jan 2027
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                      12
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Week                                           Week commencing
+
+ W9                                             25 Jan 2027
+
+ W10                                            1 Feb 2027
+
+ W11                                            8 Feb 2027
+
+ W12                                            15 Feb 2027
+
+
+Weekly calculation convention: receipts become usable at the start of the week, then that
+week’s demand is served.
+
+The example does not attempt to estimate Christmas or winter seasonality from eight weeks of
+synthetic history. Seasonality is an explicit limitation and a possible future input.
+
+
+Product master
+Internal IDs are demo identifiers, not Fromage’s actual SKUs.
+
+ SKU ID           Public product name            Production modelling status     Pops/pac   Packs/ca
+                                                                                 k          se
+
+ FR-MC            Milky Chocolate                Illustrative selected flavour   3          6
+
+ FR-VB            Vanilla Bean                   Illustrative selected flavour   3          6
+
+ FR-SC            Strawberries & Cream           Illustrative selected flavour   3          6
+
+ FR-CC            Cocoa Cookie                   Public catalogue only           3          6
+
+ FR-LC            Lemon Crumb                    Public catalogue only           3          6
+
+
+The five flavour names come from the public range. The first three are our demonstration
+selection, not Fiona’s confirmed selection. fromageprotein.com
+
+For FR-CC and FR-LC, operating fields are null, not zero. They are excluded from totals and
+forecasts.
+
+Conversions:
+
+• Pops = retail packs × 3.
+
+• Shipping cases = retail packs ÷ 6.
+
+• Explicit orders, allocations and production quantities must respect whole shipping cases.
+Analytical forecast requirements are not individual executable dispatch orders.
+
+• Forecast averages may be fractional; dispatch quantities must be feasible case multiples.
+
+
+Account and channel master
+Keep real retailers in the research context. Use fictional accounts for operational numbers.
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                    13
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Account        Display name                     Type                 Geography     Status
+ ID
+
+ AC-01          Illustrative BC Account A        Existing retail      BC            Active in synthetic
+                                                                                    model
+
+ AC-02          Illustrative BC Account B        Existing retail      BC            Active in synthetic
+                                                                                    model
+
+ AC-03          Illustrative BC Account C        Existing retail      BC            Active in synthetic
+                                                                                    model
+
+ AC-04          Illustrative Expansion           Prospective retail   Outside BC,   Scenario only
+                Group                                                 unspecified
+
+
+Do not attach synthetic orders or velocities to Aura, Fresh St. Market or another real retailer.
+
+Channels in scope: existing retail and prospective retail.
+
+Cart feedback is contextual evidence. No numerical DTC, subscription, Amazon or distributor
+channel is invented.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                       14
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+08 Complete operating datasets
+Historical demand dataset
+7.1 Weekly brand shipments
+All values below are synthetic retail packs shipped to existing accounts.
+
+ Week commencing                  Milky               Vanilla Bean    Strawberries &    Total
+                                  Chocolate                           Cream
+
+ 5 Oct                            96                  72              48                216
+
+ 12 Oct                           108                 78              54                240
+
+ 19 Oct                           108                 84              54                246
+
+ 26 Oct                           120                 84              60                264
+
+ 2 Nov                            114                 90              54                258
+
+ 9 Nov                            120                 84              60                264
+
+ 16 Nov                           120                 90              60                270
+
+ 23 Nov                           126                 96              66                288
+
+ Eight-week total                 912                 678             456               2,046
+
+
+7.2 Account-level expansion rule
+This rule fully defines the underlying 72 account–SKU–week shipment rows.
+
+For each product/week quantity Q:
+
+1. AC-01 = 6 × floor((Q × 0.50) ÷ 6)
+
+2. AC-02 = 6 × floor((Q × 0.30) ÷ 6)
+
+3. AC-03 = Q − AC-01 − AC-02
+
+All quantities remain whole cases and reconcile to the weekly table.
+
+Example for 23 November:
+
+ Account                          Chocolate                 Vanilla              Strawberry
+
+ AC-01                            60                        48                   30
+
+ AC-02                            36                        24                   18
+
+ AC-03                            30                        24                   18
+
+ Total                            126                       96                   66
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                             15
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+These account shares are synthetic fixture construction, not findings about channel
+concentration.
+
+7.3 Evidence fields
+Each historical row contains:
+
+week_start, account_id, sku_id, shipped_packs, source_type, availability_status,
+sell_through_packs, note
+
+Canonical values:
+
+• source_type = SYNTHETIC
+
+• availability_status = AVAILABLE_IN_ILLUSTRATIVE_HISTORY
+
+• sell_through_packs = null
+
+• note = Brand shipments; consumer purchases not supplied
+
+Never relabel shipments as consumer demand.
+
+7.4 Qualitative evidence register
+
+ Evidence        Observation                          Classificatio   Analytical use
+ ID                                                   n
+
+ EV-01           Customer feedback matters to         THREAD          Topic for founder review.
+                 Fiona.
+
+ EV-02           Existing BC retail presence.         THREAD/PUBL     Existing-account planning context.
+                                                      IC
+
+ EV-03           Three-flavour initial range.         THREAD          Defines pending assortment
+                                                                      confirmation.
+
+ EV-04           Manufacturing minimums drive         THREAD          Constraint, not evidence of demand.
+                 quantities.
+
+ EV-05           Eight-week shipment series           SYNTHETIC       Demonstrates baseline forecasting.
+                 above.
+
+ EV-06           Retail sell-through unavailable.     UNKNOWN         Limits confidence in consumer-level
+                                                                      interpretation.
+
+
+No invented customer quotations, flavour preferences or feedback counts.
+
+
+Forecast specification
+8.1 Existing-retail baseline
+Use the average of the latest four historical weeks.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                         16
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Product                     Four-week calculation                           Forward weekly baseline
+
+ Chocolate                   (114 + 120 + 120 + 126) / 4                     120
+
+ Vanilla                     (90 + 84 + 90 + 96) / 4                         90
+
+ Strawberry                  (54 + 60 + 60 + 66) / 4                         60
+
+ Total                                                                       270 packs/week
+
+
+Method:
+
+  ANALYTICAL NOTE
+
+
+  Four-week moving-average shipment baseline, held constant over the illustrative horizon.
+
+
+Do not claim a trained ML model, validated accuracy or statistically calibrated confidence
+intervals.
+
+8.2 Sensitivity assumptions
+
+ Case                    Existing-retail               Chocolate/wee   Vanilla/week     Strawberry/w
+                         multiplier                    k                                eek
+
+ Slower                  0.80                          96              72               48
+
+ Central                 1.00                          120             90               60
+
+ Stronger                1.20                          144             108              72
+
+
+These are sensitivity cases, not probability forecasts.
+
+Apply the multiplier to existing-retail demand only. Expansion demand remains separately
+defined, so scenario changes are explainable.
+
+8.3 Orders consume the forecast
+Confirmed orders are included within the baseline rather than added on top:
+
+Existing requirement[SKU, week] = max(existing forecast, confirmed existing orders)
+
+This is a simplified weekly forecast-consumption rule. Use it consistently.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                    17
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+Opening inventory and incoming supply
+9.1 Opening stock
+
+ SKU               Physical            Allocated to W1   Free before other       Illustrative unit
+                   stock               orders            future requirements     cost
+
+ FR-MC             360                 90                270                     CAD 4.00
+
+ FR-VB             270                 72                198                     CAD 4.20
+
+ FR-SC             180                 48                132                     CAD 4.40
+
+ Total             810                 210               600
+
+
+All opening stock is usable, with no quarantine or expiry within the horizon.
+
+Opening inventory book value:
+
+360×4.00 + 270×4.20 + 180×4.40 = CAD 3,366
+
+Opening inventory was purchased before the demo cash window. Do not charge for it again.
+
+Allocations are reservations inside stock, not additional physical deductions.
+
+9.2 Initial production commitment
+
+ Commitment ID                SKU               Packs      Available           Status within fixture
+
+ RUN-01-MC                    FR-MC             1,200      W3 opening          Committed
+
+ RUN-01-VB                    FR-VB             1,200      W3 opening          Committed
+
+ RUN-01-SC                    FR-SC             1,200      W3 opening          Committed
+
+ Total                                          3,600
+
+
+Conversions:
+
+• 3,600 retail packs.
+
+• 10,800 pops.
+
+• 600 shipping cases.
+
+No actual co-manufacturer name is assigned.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                  18
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+Production constraints and commercial assumptions
+
+ Parameter                                            Canonical synthetic value
+
+ Minimum per selected flavour                         1,200 retail packs
+
+ Production increment above minimum                   Six packs
+
+ Flavours can repeat independently                    Yes; must be confirmed for real work
+
+ Maximum packs per receipt slot                       3,600
+
+ Booking-to-usable-receipt lead time                  Six calendar weeks
+
+ Receipt includes                                     Production, release and inbound availability
+
+ Initial run timing                                   Arranged before the snapshot; payment schedule
+                                                      below
+
+ Repeat slot                                          Illustratively available W9
+
+ Frozen stock capacity                                6,000 retail packs
+
+ Opening-stock usable-until date                      31 May 2027
+
+ Initial-run usable-until date                        30 June 2027
+
+ Repeat-run usable-until date                         31 July 2027
+
+ Safety target                                        Two weeks of recurring forward requirements
+
+
+Shelf-life dates and capacity are illustrative, not validated food-safety or storage specifications.
+
+A repeat arriving W9 must be booked by W3 opening: 14 December 2026, under the
+six-week assumption.
+
+A W10 receipt can be booked by W4, but arrives after the central case’s Chocolate safety-target
+breach. Distinguish that from an actual shortage.
+
+Alternative constraint mode: if a repeat must include all three flavours, selective production
+becomes infeasible. The model must then compare the full repeat with other commercial
+options, not continue recommending a Chocolate-only run.
+
+
+Existing retail commitments
+All orders below are synthetic, with weekly dispatch dates represented by week commencing.
+
+ Order ID              Account             Due                Chocolate       Vanilla          Strawberry
+
+ SO-001                AC-01               W1                 48              36               24
+
+ SO-002                AC-02               W1                 24              18               12
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                         19
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Order ID              Account             Due        Chocolate       Vanilla        Strawberry
+
+ SO-003                AC-03               W1         18              18             12
+
+ SO-004                AC-01               W2         48              36             24
+
+ SO-005                AC-02               W2         24              18             12
+
+ SO-006                AC-03               W2         18              18             12
+
+ SO-007                AC-01               W3         48              36             24
+
+
+Totals:
+
+• W1 confirmed: 90 / 72 / 48.
+
+• W2 confirmed: 90 / 72 / 48.
+
+• W3 confirmed: 48 / 36 / 24.
+
+All remain below the central weekly forecasts, so forecast consumption leaves the central
+requirement at 120 / 90 / 60.
+
+No later orders are supplied. Future forecasts are not labelled confirmed commitments.
+
+
+Retail expansion dataset
+12.1 Prospective opening
+
+ Field                                                     Value
+
+ Opportunity ID                                            EXP-01
+
+ Account                                                   AC-04
+
+ Status                                                    Prospective; not booked
+
+ Illustrative stores                                       10
+
+ Proposed opening shipment                                 W5
+
+ Initial fill per store/product                            12 retail packs
+
+ Total opening fill                                        120 packs/product
+
+ Recurring requirement begins                              W6
+
+ Chocolate replenishment                                   30 packs/week
+
+ Vanilla replenishment                                     24 packs/week
+
+ Strawberry replenishment                                  18 packs/week
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                               20
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+Recurring quantities are group-level weekly shipment assumptions, not measured store
+velocities.
+
+The opening scenario therefore adds:
+
+ Product                       Opening fill              Seven recurring    Total expansion
+                                                         weeks              requirement
+
+ Chocolate                     120                       210                330
+
+ Vanilla                       120                       168                288
+
+ Strawberry                    120                       126                246
+
+ Total                         360                       504                864
+
+
+12.2 Delayed opening
+Alternative opening W9:
+
+• Initial fill remains 120 packs/product.
+
+• Recurring shipments begin W10.
+
+• Three recurring weeks remain inside the horizon.
+
+Additional requirements become:
+
+• Chocolate: 210.
+
+• Vanilla: 192.
+
+• Strawberry: 174.
+
+Do not apply a probability weight to dispatch requirements. The opportunity is either
+excluded or included in a named scenario.
+
+
+Cost and payment datasets
+13.1 Production cost
+These are synthetic landed costs to usable receipt, excluding tax and ongoing storage.
+
+ SKU                       CAD/pack                   Initial quantity     Initial commitment
+
+ FR-MC                     4.00                       1,200                4,800
+
+ FR-VB                     4.20                       1,200                5,040
+
+ FR-SC                     4.40                       1,200                5,280
+
+ Total                                                3,600                15,120
+
+
+13.2 Payment rules
+• Deposit: 50% at booking/payment milestone.
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                             21
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+• Balance: 50% when usable receipt arrives.
+
+• Initial run: deposit W1, balance W3.
+
+• Repeat W9: deposit W3, balance W9.
+
+• Delayed initial receipt: balance moves to W5 in that named scenario.
+
+• No refund, cancellation or renegotiation is assumed.
+
+ Payment ID              Commitment                              Week            CAD
+
+ PAY-01                  Initial run deposit                     W1              7,560
+
+ PAY-02                  Initial run balance                     W3              7,560
+
+ PAY-03                  Chocolate-only repeat deposit           W3              2,400
+
+ PAY-04                  Chocolate-only repeat balance           W9              2,400
+
+ PAY-05                  All-flavour repeat deposit              W3              7,560
+
+ PAY-06                  All-flavour repeat balance              W9              7,560
+
+
+PAY-03/04 and PAY-05/06 are mutually exclusive options.
+
+13.3 Storage convention
+Synthetic storage exposure:
+
+CAD 0.04 × physical closing packs per week
+
+This is a comparative storage-cost proxy, not a warehouse quotation. It uses closing stock, not
+daily average occupancy.
+
+13.4 Excluded financial outputs
+No supplied basis exists for:
+
+• Wholesale revenue.
+
+• Gross margin.
+
+• Customer payment timing.
+
+• Available bank balance.
+
+• Financing cost.
+
+• Lost-sales revenue.
+
+• Incremental profit.
+
+Therefore the demo shows production payments, inventory value and storage exposure,
+not net cash balance or ROI.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                               22
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+09 Calculation rules and relationships
+Calculation rules
+Demand
+Total requirement = forecast-consumed existing requirement + opening fill + expansion
+recurring requirement
+
+Opening fill and recurring requirements are different records.
+
+Inventory
+Use a signed net stock position:
+
+Net closing[t] = Net closing[t−1] + usable receipts[t] − requirement[t]
+
+Then:
+
+• Physical closing = max(0, net closing)
+
+• Outstanding requirement = max(0, −net closing)
+
+Negative values mean unmet requirements, not negative physical stock.
+
+The fixture carries unmet requirements forward as backlog. It does not assume they are
+permanently lost sales.
+
+Fulfilment
+Available this week = physical opening + usable receipts
+
+Fulfilled = min(available, opening backlog + current requirement)
+
+Carry aggregate backlog forward by SKU. Proposed policy: serve existing backlog, then
+existing-account requirements, then prospective expansion. Account/class service allocation is
+not calculated; an implemented priority ledger is required before publishing class-level service
+KPIs.
+
+Safety target
+Safety target = 2 × recurring weekly requirement
+
+Exclude one-time opening fill from this recurring target.
+
+A safety breach occurs when closing stock is strictly below the target. Equality is not a breach.
+
+Weeks of cover
+Static cover = physical stock ÷ recurring weekly requirement
+
+Label this static measure separately from the time-phased projection.
+
+Zero demand produces null / no current requirement, not infinity.
+
+Booking deadline
+Latest booking date = required usable receipt date − six weeks
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                            23
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+Booking deadlines are illustrative and conditional on slot availability.
+
+Inventory value
+Closing inventory value = Σ physical closing packs × unit cost
+
+Do not deduct backlog from inventory valuation.
+
+Option comparisons
+• Additional production commitment = selected repeat cost.
+
+• Deferred commitment versus another option = difference in production commitments.
+
+• Reduced modelled shortage = difference in outstanding requirements.
+
+• Storage proxy = sum of weekly physical closing stock × CAD 0.04.
+
+Deferred cash commitment is not profit saved.
+
+
+Dataset inventory and relationships
+The implementation should maintain these logical datasets:
+
+ Dataset                            Key                    Contents
+
+ sources                            source_id              URLs, supported facts, limitations, checked
+                                                           date
+
+ confirmed_facts                    fact_id                Public/thread facts
+
+ products                           sku_id                 Five products; three modelled
+
+ accounts                           account_id             Three synthetic existing accounts and one
+                                                           prospect
+
+ calendar                           week_id                Twelve forward weeks
+
+ shipment_history                   week + account + SKU   72 fully defined synthetic observations
+
+ evidence                           evidence_id            Source and interpretation boundaries
+
+ forecast_baselines                 SKU                    Four-week calculations
+
+ inventory_snapshot                 SKU                    Opening stock and allocations
+
+ sales_orders                       order + SKU            Twenty-one synthetic order lines
+
+ production_commitments             commitment_id          Initial and optional repeat lines
+
+ manufacturing_rules                rule_id                MOQ, increment, lead time, feasibility
+
+ expansion_events                   event_id               Opening fill and recurring requirements
+
+ costs                              SKU                    Synthetic landed cost
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                      24
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Dataset                            Key                 Contents
+
+ payment_events                     payment_id          Scenario-linked cash milestones
+
+ scenario_definitions               scenario_id         Explicit input overrides
+
+ weekly_projection                  scenario + week +   Calculated stock, backlog, fulfilment and
+                                    SKU                 safety
+
+ scenario_summary                   scenario_id         Checked comparison outputs
+
+ decisions                          decision_id         Recommendations and qualifications
+
+
+Generate all derived records centrally. Do not copy unrelated constants into individual page
+components.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                 25
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+10 Scenarios, results and feasibility
+Canonical central projection
+This is the main analytical view: W5 expansion included, initial receipt W3, no repeat
+production yet.
+
+ Week               Chocolate net              Vanilla net   Strawberry net   Total
+                    closing                    closing       closing          requirement
+
+ W1                 240                        180           120              270
+
+ W2                 120                        90            60               270
+
+ W3                 1,200                      1,200         1,200            270
+
+ W4                 1,080                      1,110         1,140            270
+
+ W5                 840                        900           960              630
+
+ W6                 690                        786           882              342
+
+ W7                 540                        672           804              342
+
+ W8                 390                        558           726              342
+
+ W9                 240                        444           648              342
+
+ W10                90                         330           570              342
+
+ W11                −60                        216           492              342
+
+ W12                −210                       102           414              342
+
+
+Reconciliation:
+
+• Opening stock: 810.
+
+• Initial receipts: 3,600.
+
+• Existing-retail requirement: 3,240.
+
+• Expansion requirement: 864.
+
+• Total requirement: 4,104.
+
+• Net ending position: 306 packs.
+
+• Physical ending stock: 516 packs.
+
+• Outstanding Chocolate requirement: 210 packs.
+
+Important lesson: a positive aggregate net position conceals a flavour-specific shortage.
+
+No cross-flavour substitution is assumed.
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                         26
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+Scenario catalogue and checked results
+All scenarios use the same opening dataset. Inputs change only as specified.
+
+ ID               Scenario                                Changed inputs
+
+ S0               Existing retail only                    Expansion excluded; no repeat.
+
+ S1               Proposed expansion, unchanged           W5 opening; no repeat.
+                  production
+
+ S2               Selective repeat                        S1 plus 1,200 Chocolate packs received W9.
+
+ S3               Repeat all three flavours               S1 plus 1,200 packs/product received W9.
+
+ S4               Slower existing demand                  S1 with existing demand × 0.80.
+
+ S5               Stronger existing demand                S1 with existing demand × 1.20.
+
+ S6               Initial production delayed              S1, but initial receipt W5 instead of W3.
+
+ S7               Expansion delayed                       Opening W9; recurring W10; no repeat.
+
+
+16.1 Ending positions
+All values are packs. Negative values are outstanding requirements.
+
+ Scenario               Chocolate               Vanilla        Strawberry           Horizon-end
+                                                                                    backlog
+
+ S0                     120                     390            660                  0
+
+ S1                     −210                    102            414                  210
+
+ S2                     990                     102            414                  0
+
+ S3                     990                     1,302          1,614                0
+
+ S4                     78                      318            558                  0
+
+ S5                     −498                    −114           270                  612
+
+ S6                     −210                    102            414                  210
+
+ S7                     −90                     198            486                  90
+
+
+16.2 Cash and stock comparisons
+Production payments include the initial run and any selected repeat, within the horizon.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                    27
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Scenario             Production payments             Ending physical inventory   Storage proxy CAD
+                      CAD                             value CAD
+
+ S0                   15,120                          5,022.00                    986.40
+
+ S1                   15,120                          2,250.00                    801.36
+
+ S2                   19,920                          6,210.00                    982.56
+
+ S3                   30,240                          16,530.00                   1,366.56
+
+ S4                   15,120                          4,102.80                    959.04
+
+ S5                   15,120                          1,188.00                    665.52
+
+ S6                   15,120                          2,250.00                    524.16
+
+ S7                   15,120                          2,970.00                    915.12
+
+
+Lower storage under a shortage scenario is not a better business outcome.
+
+16.3 Main decision comparison
+Under the central assumptions:
+
+• S1 produces a 210-pack Chocolate backlog by W12.
+
+• S2 removes that modelled backlog with a CAD 4,800 repeat.
+
+• S3 also removes it, but commits CAD 15,120.
+
+• S2 therefore commits CAD 10,320 less than S3.
+
+• S3 ends with 2,400 more packs than S2.
+
+• S3’s storage proxy is CAD 384 higher.
+
+These are modelled differences, not achieved savings.
+
+Conditional conclusion: if separate flavour production is genuinely available, a selective
+repeat deserves review before repeating all three flavours.
+
+16.4 Timing findings
+For S1:
+
+• Chocolate has its post-receipt buffer breach below the 300-pack recurring target in W9.
+
+• Chocolate develops unmet requirements in W11.
+
+• Vanilla has its post-receipt buffer breach below the 228-pack target in W11.
+
+• Strawberry does not breach its 156-pack target within the horizon.
+
+S2’s W9 Chocolate receipt prevents that safety breach.
+
+Vanilla still needs review; the fact that it does not run out by W12 is not a reason to ignore the
+period immediately beyond the horizon.
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                   28
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+16.5 Delay finding
+S6 reaches zero closing stock in W3, then creates W4 backlog:
+
+• Chocolate: 120.
+
+• Vanilla: 90.
+
+• Strawberry: 60.
+
+• Total: 270 packs temporarily unfulfilled.
+
+The W5 receipt clears that backlog in the fixture.
+
+Therefore S6 has the same ending position as S1 but a worse service path. End-of-horizon
+totals alone cannot assess the plan.
+
+
+Capacity and shelf-life checks
+Check storage immediately after receipt, before that week’s demand.
+
+Key receipt peaks:
+
+ Scenario                             Peak physical stock immediately after receipt
+
+ S1                                   3,870 packs
+
+ S2                                   3,870 packs
+
+ S3                                   5,274 packs
+
+
+All remain below the illustrative 6,000-pack capacity.
+
+The S3 W9 receipt peak is:
+
+W8 closing stock 1,674 + repeat receipt 3,600 = 5,274
+
+No expiry occurs inside the twelve-week fixture.
+
+Do not claim that remaining inventory will sell before expiry; the model has not demonstrated
+that.
+
+A full shelf-life optimisation or cold-chain routing engine is outside this phase.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                             29
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+10.1 Independently verified scenario
+paths
+All eight supplied summaries and all 288 SKU/week net positions reconcile with an independent
+calculation using integer pack inputs and decimal CAD arithmetic. The expanded weekly ledger
+in Appendix C also lists physical stock, backlog and the planning buffer.
+
+ Scenario       First unmet week             Chocolate   Vanilla   Strawberry   Receipt-time
+                                             first       first     first        peak
+
+ S0             None through W12             None        None      None         3,870 packs
+
+ S1             W11                          W11         None      None         3,870 packs
+
+ S2             None through W12             None        None      None         3,870 packs
+
+ S3             None through W12             None        None      None         5,274 packs
+
+ S4             None through W12             None        None      None         3,978 packs
+
+ S5             W10                          W10         W12       None         3,762 packs
+
+ S6             W4                           W4          W4        W4           3,600 packs
+
+ S7             W12                          W12         None      None         3,870 packs
+
+
+Timing labels: Chocolate W9 and Vanilla W11 are post-receipt buffer breaches in S1. Opening
+W1/W2 buffer conditions remain visible. Physical stock never becomes negative. Capacity uses
+stock immediately after receipt and before demand, while storage proxy uses weekly closing
+physical stock.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                            30
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+11 Decision records and analytical
+story
+Recommendation records
+Create three primary decision records and one supporting investigation.
+
+ ID        Proposed action                       Evidence                         Qualification
+
+ DEC-      Review a W9 Chocolate                 S1 safety breach W9 and          Separate flavour production
+ 01        repeat; confirm slot by W3.           backlog W11; S2 avoids both.     and lead time need
+                                                                                  confirmation.
+
+ DEC-      Avoid automatically repeating         S3 adds CAD 10,320 and           A shared-batch requirement
+ 02        Vanilla and Strawberry with           2,400 ending packs versus S2.    could make S2 infeasible.
+           Chocolate.
+
+ DEC-      Assess expansion against              W5 opening adds 864 packs        Expansion is prospective,
+ 03        existing requirements before          over the horizon; S7 delays      not confirmed.
+           promising timing.                     but does not remove
+                                                 Chocolate’s gap.
+
+ DEC-      Investigate repeat demand             No retailer sell-through         Extend the horizon before
+ 04        and Vanilla’s next                    supplied; Vanilla breaches its   concluding no further
+           commitment.                           safety target W11.               production is needed.
+
+
+Each record contains:
+
+decision_id, proposed_action, evidence_ids, scenario_ids, affected_skus, deadline,
+cash_commitment, assumptions, confirmation_needed, owner, review_status
+
+Canonical ownership:
+
+• Analysis: ScaleSight demonstration.
+
+• Commercial decision: Fiona/Nuala.
+
+• Execution: Fromage and its partners.
+
+• Review status: ILLUSTRATIVE_ANALYSIS_NOT_CLIENT_APPROVED.
+
+No fabricated “specialist-approved” badge.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                           31
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+12 Brand, shared layout and
+interactions
+Brand direction
+The supplied research checked Fromage’s website and its published page assets. The site uses
+prominent pink, warm cream and yellow, with additional flavour colours. Its public presentation
+centres on cottage-cheese frozen pops and nourishing indulgence. fromageprotein.com
+
+The following core hex values were found in the website’s source. Their application to the
+planning workspace is our design recommendation, not an official Fromage brand
+guideline.
+
+ Token                      Colour                    Workspace application
+
+ Brand pink                 #E60080                   Primary buttons, selected navigation, small accents
+
+ Cream                      #FFFFE6                   Main background
+
+ Warm yellow                #F9DC78                   Brief introduction panel and selected highlights
+
+ Pale yellow                #FCE9A4                   Supporting panels
+
+ Pale pink                  #FFE6EB                   Context notes and selected-row background
+
+ Ink                        #12110F                   Primary text
+
+ White                      #FFFFFF                   Tables and analytical cards
+
+
+Additional workspace utility colours, chosen for clear status communication:
+
+ Token                                Colour                     Use
+
+ Risk                                 #A92838                    Unmet requirements
+
+ Review                               #825600                    Assumptions or decisions needing attention
+
+ Within modelled requirement          #21613B                    No modelled shortage
+
+ Muted text                           #635F59                    Secondary labels
+
+ Border                               #E3DFD3                    Card and table boundaries
+
+
+Never communicate meaning through colour alone.
+
+Visual character
+
+• Cream canvas, white analytical cards and restrained pink accents.
+
+• Rounded cards, approximately 16 px radius.
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                           32
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+• Fine borders; minimal shadows.
+
+• Warmth through colour and spacing rather than decorative illustrations.
+
+• Product imagery only in the catalogue/context drawer or small product identifiers.
+
+• No frozen-dessert marketing slogans inside analytical charts.
+
+• No large gradient KPI panels or generic blue enterprise styling.
+
+Typography
+
+The published site contains font identifiers that do not reliably establish a reusable licensed
+brand font. Do not label an approximation as Fromage’s official typography.
+
+For the workspace, use:
+
+• Manrope: headings, weights 600–700.
+
+• Inter: body, tables and controls.
+
+• Tabular numerals for quantitative columns.
+
+• Licensed official fonts can replace these later without changing layout.
+
+Sizes: page title 30 px; section title 20 px; card title 17 px; body 15 px; supporting text 13 px.
+Avoid essential text below 12 px.
+
+Brand lockup
+
+Use an official wordmark asset if available and suitable for this private concept. Otherwise use a
+plain text name, without recreating a logo.
+
+Exact lockup:
+
+  EXACT UI COPY
+
+
+  Fromage
+  Planning workspace
+  Prepared by ScaleSight
+
+
+Do not use “ScaleSight × Fromage” as a partnership claim.
+
+
+Overall structure and navigation
+Desktop-first, designed at 1440 px wide:
+
+• Left navigation: 224 px.
+
+• Main content: remaining width, maximum 1200 px.
+
+• Page padding: 32 px.
+
+• Card gaps: 20–24 px.
+
+• Tables remain readable without forcing all columns into one narrow card.
+
+Navigation:
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                  33
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Label                                                Route
+
+ Planning Brief                                       /brief
+
+ Demand & Stock                                       /demand-stock
+
+ Production Plan                                      /production
+
+ Retail Expansion                                     /expansion
+
+ Options & Cash                                       /options
+
+
+Bottom navigation utilities:
+
+• This week’s review
+
+• Sources & assumptions
+
+• About this example
+
+No settings, integrations, user management, onboarding or pricing pages.
+
+Persistent top bar
+
+Left:
+
+  EXACT UI COPY
+
+
+  Planning snapshot · 30 Nov 2026
+
+
+Right:
+
+  EXACT UI COPY
+
+
+  12-week view · CAD · Retail packs
+
+
+Below the top bar, a slim persistent disclosure:
+
+  EXACT UI COPY
+
+
+  Illustrative planning example. Operating numbers and selected production
+  flavours are synthetic.
+
+
+Provide a “What’s illustrative?” link opening the evidence drawer.
+
+
+Shared scenario behaviour
+The baseline is S1: Proposed expansion, unchanged production.
+
+The workspace must distinguish:
+
+• Baseline plan: S1.
+
+• Explored case: whichever scenario the viewer selects.
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                          34
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+A scenario selection persists across analytical pages. The active case is always visible.
+
+Exact labels:
+
+ ID                                Display label
+
+ S0                                Existing retail only
+
+ S1                                Proposed expansion
+
+ S2                                Chocolate-only repeat
+
+ S3                                Repeat all three
+
+ S4                                Slower existing demand
+
+ S5                                Stronger existing demand
+
+ S6                                First run arrives later
+
+ S7                                New-store opening moves later
+
+
+Button:
+
+  EXACT UI COPY
+
+
+  Reset to proposed expansion
+
+
+For this demo, use defined scenario presets rather than unrestricted sliders. Combining
+arbitrary changes would require additional calculated and verified scenarios.
+
+Scenario feedback:
+
+  EXACT UI COPY
+
+
+  Example updated. Stock, timing and cash now reflect this case.
+
+
+All cards, tables and charts update from shared calculations. Never change the chart while
+leaving its recommendation text unchanged.
+
+
+Shared language and formatting
+Use Canadian spelling: flavour, modelling.
+
+ Item                                    Display convention
+
+ Packs                                   1,200 packs
+
+ Currency card                           CAD 4,800
+
+ Currency table                          CAD in column heading; values formatted consistently
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                             35
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Item                                    Display convention
+
+ Dates                                   14 Dec 2026
+
+ Week labels                             W3 · 14 Dec
+
+ Unknown                                 Not supplied
+
+ Not modelled                            Not modelled in this example
+
+ Synthetic account                       Illustrative BC Account A
+
+ Shortage                                Unmet requirement
+
+ Safety threshold                        Planning buffer in primary UI; formula available in tooltip
+
+
+Avoid “AI confidence score,” “optimised profit,” “revenue unlocked” and “guaranteed savings.”
+
+Backlog tooltip
+
+  EXACT UI COPY
+
+
+  “Demand the example cannot fulfil by this point. It is carried forward in the model; it is not
+  an estimate of permanently lost sales.”
+
+
+Planning buffer tooltip
+
+  EXACT UI COPY
+
+
+  “Two weeks of recurring requirements in this example. This is an illustrative policy, not
+  Fromage’s confirmed target.”
+
+
+Forecast tooltip
+
+  EXACT UI COPY
+
+
+  “A projection based on the illustrative shipment history. It is not a confirmed customer
+  order.”
+
+
+Interaction and implementation rules
+All routes preserve the active scenario.
+
+• Product selection persists where relevant.
+
+• Scenario names are visible beside every affected chart.
+
+• Tooltips work on hover, keyboard focus and touch.
+
+• Charts expose an accompanying data table.
+
+• Tables have clear row labels and sticky headings where needed.
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                    36
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+• Use direct labels and distinct line styles alongside colour.
+
+• Selected controls must be visually distinct from operational approval.
+
+• No Place order, Approve production, Sync ERP or Deploy AI buttons.
+
+• No fake live-feed indicators, integrations or refresh timestamps.
+
+• Use “Illustrative snapshot”, not “Connected to Fromage.”
+
+• Reset restores the canonical S1 fixture.
+
+• Scenario changes recalculate views and load the correct explanatory copy.
+
+• Switching independent flavour runs off disables selective-repeat feasibility.
+
+Unavailable data state
+
+  EXACT UI COPY
+
+
+  “Not supplied in this example.”
+
+
+Unmodelled product state
+
+  EXACT UI COPY
+
+
+  “This flavour is part of the public range but is not included in the operating scenario.”
+
+
+Loading, if needed
+
+  EXACT UI COPY
+
+
+  “Updating the example…”
+
+
+Calculation failure
+
+  EXACT UI COPY
+
+
+  “The example could not be updated. Reset to the baseline to continue.”
+
+
+Never leave stale figures visible with a successful-update message.
+
+
+Responsive behaviour
+At tablet width, collapse navigation to an icon rail with accessible labels.
+
+On mobile:
+
+• Navigation becomes a menu.
+
+• Summary cards stack vertically.
+
+• Comparison options become stacked cards.
+
+• Wide numerical tables scroll horizontally with the product column retained.
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           37
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+• Drawers become full-screen panels.
+
+• Persistent disclosure remains readable.
+
+• No tiny compressed desktop charts.
+
+The call presentation remains desktop-first; a follow-up link must still be usable on a phone.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                              38
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+12.A Conditional copy and timeline
+reference
+This table defines concise active-case variants for the Planning Brief and scenario detail panels.
+These are literal UI statements. Keep proposed repeat costs separate from active-plan results;
+do not recommend a repeat as universally necessary in the slower-demand case.
+
+ Case           First-unmet card              Active-case explanation
+
+ S0             None through W12              Existing retail is covered through W12 in this example.
+                                              Chocolate ends with 120 packs; the next period still needs
+                                              review.
+
+ S1             Chocolate · W11               Chocolate has 60 packs unfulfilled in W11 and 210 outstanding
+                                              at W12. Review the separate-run assumption before considering
+                                              the proposed repeat.
+
+ S2             None through W12              The Chocolate repeat covers the modelled requirement through
+                                              W12. Vanilla still falls below its planning buffer in W11.
+
+ S3             None through W12              Repeating all three covers the central case through W12 and
+                                              leaves 3,906 physical packs. This commits CAD 10,320 more
+                                              than the Chocolate-only option.
+
+ S4             None through W12              Slower existing demand produces no backlog through W12
+                                              without a repeat. Chocolate ends with 78 packs.
+
+ S5             Chocolate · W10               Stronger existing demand leaves 612 packs outstanding at W12:
+                                              498 Chocolate and 114 Vanilla. This case contains no repeat.
+
+ S6             Three flavours · W4           The later first receipt leaves 270 packs temporarily unfulfilled in
+                                              W4. W5 receipt clears that backlog; Chocolate ends W12 with
+                                              210 packs outstanding.
+
+ S7             Chocolate · W12               Moving the opening to W9 leaves 90 Chocolate packs
+                                              outstanding at W12. A later opening does not remove the gap.
+
+
+For the S6 summary card, supporting copy is “120 Chocolate, 90 Vanilla and 60 Strawberry
+packs temporarily unfulfilled.” For S5, supporting copy is “150 Chocolate packs unfulfilled by 1
+Feb.” For S7, supporting copy is “90 Chocolate packs unfulfilled by 15 Feb.” For S0/S2/S3/S4,
+supporting copy is “No modelled unmet requirement within this window.”
+
+The booking and CAD 4,800 cards describe a central proposed response. In an explored case,
+label the response “Central-case proposal for comparison” or suppress it when irrelevant; never
+imply the active case needs or contains that order. If independent runs are unavailable, replace
+the proposal amount with “Unavailable under this assumption” and retain the explanation of S2
+as infeasible.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                                 39
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Timeline event                           Canonical label    Context
+                                          and date
+
+ Initial receipt                          W3 · 14 Dec 2026   W5 · 28 Dec 2026 in S6
+
+ Proposed repeat booking                  W3 · 14 Dec 2026   For W9 receipt; illustrative six-week lead
+                                                             time
+
+ Proposed repeat receipt                  W9 · 25 Jan 2027   S2/S3 only; no supplier slot claimed
+                                                             reserved
+
+ Post-receipt Chocolate buffer            W9 · 25 Jan 2027   S1 without repeat; initial buffer bridge
+ breach                                                      remains visible
+
+ First unmet Chocolate                    W11 · 8 Feb 2027   S1 only; active-case warnings use the case
+ requirement                                                 table above
+
+ Post-receipt Vanilla buffer              W11 · 8 Feb 2027   S1/S2; do not infer no next run is required
+ breach
+
+
+This reference supplements the route contracts and Phase 2 exact copy. It does not introduce
+combined scenarios.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                        40
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+13.1 Planning Brief — /brief
+Developer contract
+
+ Field                                     Requirement
+
+ Default state                             S1 proposed expansion; independent flavour runs assumed
+                                           available; FR-MC where applicable
+
+ Component order / above-fold              Snapshot and disclosure > title/context > yellow opening panel >
+ hierarchy                                 three summary cards > DEC-01 recommendation > DEC-03/04
+                                           supporting cards > service strip
+
+ Data bindings                             decisions + scenario_summary + first_unmet selector; booking
+                                           date from W9 minus six weeks; comparison uses central S1/S2/S3
+
+ Interactions / targets                    See the production plan → /production; Compare the options →
+                                           /options; Review the opening → /expansion; Inspect the evidence
+                                           → /demand-stock.
+
+ Scenario response                         Preserve active named preset; update every affected result and
+                                           explanation. Proposed-response amounts are not active orders.
+
+ States and accessibility                  Shared states from Section 12; keyboard controls, semantic
+                                           tables, chart data tables and distinct non-colour status labels.
+
+
+
+Data mapping and purpose
+Purpose: identify the few decisions needing attention.
+
+Default analytical context: S1, with S2 and S3 available for comparison.
+
+Show:
+
+• Three decision records: DEC-01 to DEC-03.
+
+• First projected unmet requirement: Chocolate, W11.
+
+• Proposed booking deadline: W3, subject to production assumptions.
+
+• Selective-repeat commitment: CAD 4,800.
+
+• Difference versus all-flavour repeat: CAD 10,320 less commitment.
+
+• Confirmation required: minimum structure and separate flavour runs.
+
+Dependencies:
+
+products + inventory + forecasts + orders + production + expansion + scenarios + decisions
+
+Never label CAD 10,320 “savings achieved.”
+
+
+Page 1 — Planning Brief
+Purpose: Fiona should understand the situation and the proposed next step within 20 seconds.
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                           41
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+Header
+Title:
+
+  EXACT UI COPY
+
+
+  Your next production decision
+
+
+Subtitle:
+
+  EXACT UI COPY
+
+
+  “What the minimum run could support, where attention is needed and what to check before
+  committing again.”
+
+
+Context chip:
+
+  EXACT UI COPY
+
+
+  Prepared example · Awaiting business context
+
+
+Opening panel
+Warm-yellow panel, short text only:
+
+  EXACT UI COPY
+
+
+  The minimum sets the starting quantity. The next decision depends on what
+  happens after it.
+
+
+Supporting copy:
+
+  EXACT UI COPY
+
+
+  “This example connects existing retail requirements, a possible new-store opening and the
+  timing of another production run.”
+
+
+Three summary cards
+Default S1 values:
+
+ Label                                   Value             Supporting text
+
+ First unmet requirement                 Chocolate · W11   “60 packs unfulfilled by 8 Feb.”
+
+ Booking date to review                  14 Dec            “For an illustrative 25 Jan receipt.”
+
+ Selective repeat commitment             CAD 4,800         “Conditional on a separate Chocolate run.”
+
+
+The second and third cards describe a proposed response, not an approved order.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                     42
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+Main recommendation
+Label:
+
+  EXACT UI COPY
+
+
+  Production review
+
+
+Heading:
+
+  EXACT UI COPY
+
+
+  Review a Chocolate-only repeat before repeating the whole range.
+
+
+Body:
+
+  EXACT UI COPY
+
+
+  “With the proposed opening included, Chocolate falls below the example’s planning buffer in
+  W9 and develops unmet requirements in W11. A 1,200-pack receipt in W9 covers the
+  modelled requirement through W12.”
+
+
+Financial note:
+
+  EXACT UI COPY
+
+
+  “That repeat commits CAD 4,800. Repeating all three flavours commits CAD 15,120.”
+
+
+Qualification:
+
+  EXACT UI COPY
+
+
+  First confirm: “Can the manufacturer run flavours separately, and is the six-week lead time
+  realistic?”
+
+
+Buttons:
+
+• See the production plan
+
+• Compare the options
+
+Two supporting decisions
+Card: Expansion
+
+Heading:
+
+  EXACT UI COPY
+
+
+  Check the opening against existing retail requirements.
+
+
+Body:
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                         43
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+  EXACT UI COPY
+
+
+  “The proposed ten-store opening adds 864 packs over the twelve-week example. Moving the
+  opening later reduces the requirement inside this window, but does not remove Chocolate’s
+  gap.”
+
+
+Button:
+
+  EXACT UI COPY
+
+
+  Review the opening
+
+
+Card: Evidence
+
+Heading:
+
+  EXACT UI COPY
+
+
+  Keep the forecast open to challenge.
+
+
+Body:
+
+  EXACT UI COPY
+
+
+  “The example uses shipments to retailers. Retail sell-through and Fromage’s actual
+  manufacturing terms have not been supplied.”
+
+
+Button:
+
+  EXACT UI COPY
+
+
+  Inspect the evidence
+
+
+Managed-service strip
+
+  EXACT UI COPY
+
+
+  Maintained analysis. Decisions owned by your team.
+  “ScaleSight would update the analysis, investigate changes and prepare recommendations.
+  You and Nuala would add business context and approve the next steps.”
+
+
+Small caption:
+
+  EXACT UI COPY
+
+
+  “This demonstration is illustrative; no client data is connected.”
+
+
+Behaviour when exploring another case
+Preserve a narrow baseline summary, then show:
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                         44
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+  EXACT UI COPY
+
+
+  Exploring: [scenario name]
+
+
+Replace numerical conclusions with case-specific results. If S2 is selected:
+
+  EXACT UI COPY
+
+
+  “The Chocolate repeat covers the modelled requirement through W12. Vanilla still falls
+  below its planning buffer in W11.”
+
+
+Do not leave the S1 shortage warning displayed as though it still applies.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                        45
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+13.2 Demand & Stock — /demand-stock
+Developer contract
+
+ Field                                     Requirement
+
+ Default state                             S1 proposed expansion; independent flavour runs assumed
+                                           available; FR-MC where applicable
+
+ Component order / above-fold              Title and filters > evidence labels > shipment/forecast chart >
+ hierarchy                                 forecast calculation > opening stock > time-phased chart and
+                                           weekly ledger > interpretation
+
+ Data bindings                             shipment_history filtered by product/account; forward baseline
+                                           remains group-level; weekly_projection filtered by active
+                                           scenario/SKU
+
+ Interactions / targets                    Product defaults FR-MC; account defaults All existing accounts.
+                                           Account changes affect history only. Catalogue opens product
+                                           drawer; scenario selection replaces full preset.
+
+ Scenario response                         Preserve active named preset; update every affected result and
+                                           explanation. Proposed-response amounts are not active orders.
+
+ States and accessibility                  Shared states from Section 12; keyboard controls, semantic
+                                           tables, chart data tables and distinct non-colour status labels.
+
+
+
+Data mapping and purpose
+Purpose: explain the evidence behind the planning requirement.
+
+Show:
+
+• Eight historical weekly shipment observations.
+
+• Four-week forecast calculation.
+
+• Slower/central/stronger demand cases.
+
+• Opening physical versus allocated stock.
+
+• Time-phased stock projection.
+
+• Evidence panel distinguishing shipments, sell-through and feedback.
+
+Filters:
+
+• Product.
+
+• Account, for historical shipments.
+
+• Scenario.
+
+• Existing retail versus expansion contribution.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                           46
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+Account-level forward forecasts are not supplied. Do not fabricate them when the account filter
+is applied.
+
+Display “Forward forecast maintained at existing-retail group level in this example.”
+
+
+Page 2 — Demand & Stock
+Header
+Title:
+
+  EXACT UI COPY
+
+
+  What is moving—and what is available?
+
+
+Subtitle:
+
+  EXACT UI COPY
+
+
+  “Inspect the shipment history, the forecast and the stock position behind the brief.”
+
+
+Controls:
+
+• Product: Chocolate / Vanilla / Strawberry.
+
+• History account: All existing accounts / A / B / C.
+
+• Scenario preset.
+
+The account filter applies to historical shipments only.
+
+Persistent filter note:
+
+  EXACT UI COPY
+
+
+  “Forward requirements are modelled for existing retail as a group.”
+
+
+Section A — Evidence before interpretation
+Three compact labels:
+
+• Available in example: Eight weeks of synthetic shipments.
+
+• Not supplied: Retailer sell-through.
+
+• Needs context: Feedback, availability and future account plans.
+
+No fake data-quality percentage.
+
+Section B — Historical shipments and forecast
+Chart title:
+
+  EXACT UI COPY
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           47
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+  Retail shipments and the forward baseline
+
+
+Chart:
+
+• Eight historical bars.
+
+• Vertical divider: Forecast begins.
+
+• Central forward line.
+
+• Optional dotted sensitivity lines, labelled −20% case and +20% case.
+
+• Never shade these as a statistical confidence interval.
+
+Axis:
+
+  EXACT UI COPY
+
+
+  Retail packs per week
+
+
+History tooltip:
+
+  EXACT UI COPY
+
+
+  “Week of [date] · [product] · [quantity] packs shipped · Illustrative data”
+
+
+Forecast tooltip:
+
+  EXACT UI COPY
+
+
+  “Four-week shipment average · [quantity] packs/week · Projection, not confirmed orders”
+
+
+Calculation box:
+
+  EXACT UI COPY
+
+
+  How this forecast was formed
+
+
+For Chocolate:
+
+  EXACT UI COPY
+
+
+  “The latest four illustrative weeks are 114, 120, 120 and 126 packs. Their average is 120
+  packs per week.”
+
+
+Below:
+
+  EXACT UI COPY
+
+
+  “The sensitivity cases test slower or stronger existing-account requirements. They do not
+  assign probabilities.”
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           48
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+Section C — Opening stock table
+
+ Product                                    Physical stock   Reserved for W1   Unreserved stock
+                                                             orders
+
+ Milky Chocolate                            360              90                270
+
+ Vanilla Bean                               270              72                198
+
+ Strawberries & Cream                       180              48                132
+
+
+Caption:
+
+  EXACT UI COPY
+
+
+  “Reservations sit within physical stock. They are not deducted twice from the projection.”
+
+
+Section D — Stock over time
+Chart title:
+
+  EXACT UI COPY
+
+
+  When could each flavour need attention?
+
+
+Show one selected flavour at a time:
+
+• Physical closing stock line.
+
+• Dashed planning-buffer line.
+
+• Receipt markers.
+
+• Separate red backlog bars below the chart.
+
+Do not draw negative physical inventory.
+
+Default Chocolate annotation:
+
+  EXACT UI COPY
+
+
+  “W11: 60 packs of unmet requirement.”
+
+
+Table below:
+
+Week | Requirement | Usable receipt | Closing stock | Unmet requirement
+
+Derived from Phase 1, not separately entered.
+
+Section E — Interpretation
+Default copy:
+
+  EXACT UI COPY
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                            49
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+  “Chocolate’s projected requirement is higher than the other flavours, but the first run is
+  equal across the three. The same production quantity therefore creates different stock
+  coverage.”
+
+
+Evidence limitation:
+
+  EXACT UI COPY
+
+
+  “This illustrates a planning question. It does not establish Fromage’s actual flavour ranking.”
+
+
+Catalogue drawer
+Title:
+
+  EXACT UI COPY
+
+
+  Public range and example selection
+
+
+List all five public flavours. The three modelled products carry:
+
+  EXACT UI COPY
+
+
+  Selected for illustration
+
+
+Other two:
+
+  EXACT UI COPY
+
+
+  Public catalogue · Operating data not modelled
+
+
+Do not display zero sales for them.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                 50
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+13.3 Production Plan — /production
+Developer contract
+
+ Field                                     Requirement
+
+ Default state                             S1 proposed expansion; independent flavour runs assumed
+                                           available; FR-MC where applicable
+
+ Component order / above-fold              Title > constraints > initial-run table > timeline > selective-repeat
+ hierarchy                                 proposal > feasibility test > receipt-delay test > payments/storage
+
+ Data bindings                             production_commitments + manufacturing_rules +
+                                           payment_events + weekly_projection; timeline context must
+                                           identify whether it describes S1 or active case
+
+ Interactions / targets                    Preview Chocolate-only repeat → load S2; Compare repeating all
+                                           three → /options primary comparison; Test a later first receipt →
+                                           load S6; Inspect the assumptions → sources drawer.
+
+ Scenario response                         Preserve active named preset; update every affected result and
+                                           explanation. Proposed-response amounts are not active orders.
+
+ States and accessibility                  Shared states from Section 12; keyboard controls, semantic
+                                           tables, chart data tables and distinct non-colour status labels.
+
+
+
+Data mapping and purpose
+Purpose: connect minimum runs with stock coverage and booking dates.
+
+Show:
+
+• Initial run by flavour.
+
+• Six-week lead-time assumption.
+
+• Per-flavour minimum.
+
+• Separate-flavour production assumption.
+
+• W9 selective repeat versus full repeat.
+
+• Safety breaches and first unmet requirements.
+
+• Payment milestones.
+
+• Receipt-time storage checks.
+
+Interactions:
+
+• Initial receipt W3 versus W5.
+
+• Selective repeat versus all-flavour repeat.
+
+• Separate-flavour production allowed versus unavailable.
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                            51
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+If unavailable, S2 becomes infeasible, not merely less attractive.
+
+
+Page 3 — Production Plan
+Header
+Title:
+
+  EXACT UI COPY
+
+
+  Plan around the minimum
+
+
+Subtitle:
+
+  EXACT UI COPY
+
+
+  “Connect the manufacturing constraint with stock coverage, booking dates and payment
+  commitments.”
+
+
+Constraint strip
+
+ Label                                                   Default
+
+ Minimum per flavour                                     1,200 packs
+
+ Booking to usable receipt                               6 weeks
+
+ Separate flavour runs                                   Assumed available
+
+ Initial receipt                                         14 Dec · W3
+
+
+Directly below:
+
+  EXACT UI COPY
+
+
+  Manufacturing terms are illustrative and need confirmation.
+
+
+Section A — Initial run
+Heading:
+
+  EXACT UI COPY
+
+
+  The starting commitment
+
+
+Table:
+
+Product | Incoming packs | Available date | Commitment value
+
+Use Phase 1’s three initial-run records.
+
+Totals:
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                      52
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+  EXACT UI COPY
+
+
+  3,600 packs · 10,800 pops · CAD 15,120
+
+
+Caption:
+
+  EXACT UI COPY
+
+
+  “Landed production cost in this example. Ongoing storage and tax are excluded.”
+
+
+Section B — Timeline
+Title:
+
+  EXACT UI COPY
+
+
+  The dates behind the decision
+
+
+Rows:
+
+• Initial production receipt.
+
+• Chocolate buffer breach without a repeat.
+
+• Proposed repeat booking.
+
+• Proposed repeat receipt.
+
+• First unmet Chocolate requirement without a repeat.
+
+Use dates alongside weeks.
+
+The manufacturer’s detailed processing stages are not known. Do not invent
+ingredient-ordering, mixing, freezing or QA-stage durations.
+
+Section C — Proposed next commitment
+Heading:
+
+  EXACT UI COPY
+
+
+  A selective repeat to review
+
+
+ Product                      Proposed repeat         Receipt       Additional commitment
+
+ Milky Chocolate              1,200 packs             25 Jan · W9   CAD 4,800
+
+
+Body:
+
+  EXACT UI COPY
+
+
+  “Under the central case, this receipt covers Chocolate’s modelled requirement through W12.
+  It does not establish the best long-term quantity beyond this window.”
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                         53
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+Buttons:
+
+• Preview Chocolate-only repeat
+
+• Compare repeating all three
+
+Both are analytical previews. Neither places an order.
+
+Section D — Constraint test
+Control:
+
+  EXACT UI COPY
+
+
+  Can flavours be repeated separately?
+
+
+Options:
+
+• Assumed yes.
+
+• Assume no.
+
+When “no” is selected:
+
+  EXACT UI COPY
+
+
+  Chocolate-only repeat unavailable under this assumption
+  “The selective option is not feasible if the manufacturer requires all three flavours in the
+  repeat. Review the full-run exposure and confirm what alternatives can actually be
+  negotiated.”
+
+
+Disable S2 as an actionable option, but permit viewing its explanation.
+
+Do not automatically assume a smaller run, emergency supplier or negotiated exception exists.
+
+Section E — Receipt delay
+Button:
+
+  EXACT UI COPY
+
+
+  Test a later first receipt
+
+
+Loads S6.
+
+Result:
+
+  EXACT UI COPY
+
+
+  270 packs temporarily unfulfilled in W4
+  “The later receipt clears the illustrative backlog in W5. The end-of-horizon totals match the
+  original case, but the service path is different.”
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                               54
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+Section F — Payment and storage checks
+Two cards:
+
+Payment timing
+
+  EXACT UI COPY
+
+
+  “A W9 Chocolate repeat places a CAD 2,400 deposit in W3 and a CAD 2,400 balance in W9.”
+
+
+Storage check
+
+  EXACT UI COPY
+
+
+  “The illustrated options remain within the assumed 6,000-pack capacity. Capacity and
+  usable shelf life need confirmation.”
+
+
+Link:
+
+  EXACT UI COPY
+
+
+  Inspect the assumptions
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                         55
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+13.4 Retail Expansion — /expansion
+Developer contract
+
+ Field                                     Requirement
+
+ Default state                             S1 proposed expansion; independent flavour runs assumed
+                                           available; FR-MC where applicable
+
+ Component order / above-fold              Title > prospect card and opening choice > opening/repeat chart
+ hierarchy                                 + table > weekly demand components > W5/W9 comparison >
+                                           decision note
+
+ Data bindings                             expansion_events + scenario definitions + weekly_projection; W5
+                                           adds 864 packs; W9 adds 576 packs within horizon
+
+ Interactions / targets                    Opening choice loads S0/S1/S7 in full. Show reset copy: “Opening
+                                           case selected. Earlier scenario changes have been reset.”
+                                           Compare the production responses → /options central S1/S2/S3.
+
+ Scenario response                         Preserve active named preset; update every affected result and
+                                           explanation. Proposed-response amounts are not active orders.
+
+ States and accessibility                  Shared states from Section 12; keyboard controls, semantic
+                                           tables, chart data tables and distinct non-colour status labels.
+
+
+
+Data mapping and purpose
+Purpose: assess what the proposed opening would require.
+
+Show:
+
+• Existing accounts as an existing group.
+
+• AC-04 as prospective.
+
+• Ten illustrative stores.
+
+• Initial fill separately from replenishment.
+
+• W5 versus W9 opening.
+
+• Resulting flavour-level coverage.
+
+• Existing-account and expansion demand as distinct layers.
+
+Do not display prospective demand as booked revenue or confirmed orders.
+
+
+Page 4 — Retail Expansion
+Header
+Title:
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                           56
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+  EXACT UI COPY
+
+
+  What could the next opening require?
+
+
+Subtitle:
+
+  EXACT UI COPY
+
+
+  “Separate the stock needed to fill new shelves from the replenishment that may follow.”
+
+
+Opportunity card
+
+  EXACT UI COPY
+
+
+  Illustrative Expansion Group
+
+
+Status:
+
+  EXACT UI COPY
+
+
+  Prospective · Not a confirmed order
+
+
+Facts:
+
+• Ten example stores.
+
+• Opening W5.
+
+• Twelve packs per product per store.
+
+• Three example flavours.
+
+Control:
+
+  EXACT UI COPY
+
+
+  Opening case
+
+
+Options:
+
+• Exclude opening — S0.
+
+• Open in W5 — S1.
+
+• Move opening to W9 — S7.
+
+Choosing one loads the complete named scenario and resets incompatible changes.
+
+Section A — Opening versus repeat requirement
+Chart: stacked columns by flavour.
+
+Segments:
+
+• Opening fill.
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                         57
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+• Recurring replenishment.
+
+Default table:
+
+ Product                          Opening fill         Recurring requirement     Total
+
+ Chocolate                        120                  210                       330
+
+ Vanilla                          120                  168                       288
+
+ Strawberry                       120                  126                       246
+
+ Total                            360                  504                       864
+
+
+Caption:
+
+  EXACT UI COPY
+
+
+  “Recurring shipments begin one week after the illustrative opening. These are scenario
+  assumptions, not measured consumer purchase rates.”
+
+
+Section B — Existing requirements alongside expansion
+Chart title:
+
+  EXACT UI COPY
+
+
+  The requirement the stock would need to cover
+
+
+Stacked weekly bars:
+
+• Existing retail.
+
+• New-store opening fill.
+
+• New-store recurring requirement.
+
+Highlight W5’s 630 packs, then W6–W12’s 342 packs/week.
+
+Tooltip must show each component separately.
+
+Section C — Opening-date comparison
+
+ Opening case                     Chocolate unmet at   Vanilla closing     Strawberry closing
+                                  W12                  stock               stock
+
+ W5 opening                       210                  102                 414
+
+ W9 opening                       90                   198                 486
+
+
+Explanation:
+
+  EXACT UI COPY
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                             58
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+  “A later opening reduces the requirement inside this twelve-week window. It does not
+  eliminate Chocolate’s need for another planning response.”
+
+
+No “growth supported” percentage or invented revenue.
+
+Section D — Decision note
+
+  EXACT UI COPY
+
+
+  What to establish before promising an opening
+  “Confirm the opening quantity, replenishment expectations, delivery timing and production
+  availability. Then assess them alongside existing-account requirements.”
+
+
+Button:
+
+  EXACT UI COPY
+
+
+  Compare the production responses
+
+
+Opens Options & Cash with S1/S2/S3.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           59
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+13.5 Options & Cash — /options
+Developer contract
+
+ Field                                     Requirement
+
+ Default state                             S1 proposed expansion; independent flavour runs assumed
+                                           available; FR-MC where applicable
+
+ Component order / above-fold              Title/window note > S1/S2/S3 comparison >
+ hierarchy                                 interpretation/qualification > payment chart > selectable stress
+                                           cases > horizon limitation
+
+ Data bindings                             scenario_summary for fixed central S1/S2/S3 comparison;
+                                           payment_events by option/week; stress panel uses selected S4–S7
+
+ Interactions / targets                    Primary panel always central demand, W5 opening; label it visibly
+                                           even while a stress case is inspected. Stress choice persists active
+                                           case but never changes the primary comparison into an unverified
+                                           combination.
+
+ Scenario response                         Preserve active named preset; update every affected result and
+                                           explanation. Proposed-response amounts are not active orders.
+
+ States and accessibility                  Shared states from Section 12; keyboard controls, semantic
+                                           tables, chart data tables and distinct non-colour status labels.
+
+
+
+Data mapping and purpose
+Purpose: compare consequences before approval.
+
+Show:
+
+• S1, S2 and S3 as primary options.
+
+• S4–S7 as stress cases.
+
+• Production payment timeline.
+
+• Ending inventory by flavour.
+
+• Outstanding requirements.
+
+• Inventory book value.
+
+• Storage proxy.
+
+• Feasibility and assumption warnings.
+
+Every comparison must name its baseline.
+
+Example:
+
+  EXACT UI COPY
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                           60
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+  “CAD 10,320 lower production commitment than repeating all three flavours.”
+
+
+Not:
+
+  EXACT UI COPY
+
+
+  “ScaleSight saves CAD 10,320.”
+
+
+Page 5 — Options & Cash
+Header
+Title:
+
+  EXACT UI COPY
+
+
+  Compare before committing
+
+
+Subtitle:
+
+  EXACT UI COPY
+
+
+  “Review availability, stock remaining and production payments together.”
+
+
+Small note:
+
+  EXACT UI COPY
+
+
+  “Comparisons cover this twelve-week example.”
+
+
+Section A — Primary comparison
+Three option columns:
+
+1. Keep production unchanged
+
+2. Repeat Chocolate only
+
+3. Repeat all three
+
+Use neutral visual treatment. Mark S2:
+
+  EXACT UI COPY
+
+
+  Worth reviewing if separate runs are available
+
+
+Do not label it “optimal” or “approved.”
+
+ Metric                                      Unchanged   Chocolate only      All three
+
+ Additional repeat commitment                CAD 0       CAD 4,800           CAD 15,120
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                       61
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Metric                                      Unchanged    Chocolate only     All three
+
+ Total production payments                   CAD 15,120   CAD 19,920         CAD 30,240
+
+ W12 unmet requirement                       210 packs    0                  0
+
+ W12 physical stock                          516 packs    1,506 packs        3,906 packs
+
+ W12 inventory value                         CAD 2,250    CAD 6,210          CAD 16,530
+
+ Storage proxy                               CAD 801.36   CAD 982.56         CAD 1,366.56
+
+
+Section B — Main interpretation
+
+  EXACT UI COPY
+
+
+  Both repeat options cover the central case through W12. They commit different
+  amounts of cash.
+  “The Chocolate-only option commits CAD 10,320 less than repeating all three flavours and
+  leaves 2,400 fewer packs at the end of the example.”
+
+
+Qualification:
+
+  EXACT UI COPY
+
+
+  “This is a modelled difference between options, not realised savings. The selective option
+  depends on manufacturing feasibility.”
+
+
+Section C — Production payment chart
+Grouped columns by week.
+
+Show deposit and balance separately.
+
+For S2:
+
+• W1: CAD 7,560.
+
+• W3: CAD 9,960, split into initial balance and repeat deposit.
+
+• W9: CAD 2,400.
+
+For S3:
+
+• W1: CAD 7,560.
+
+• W3: CAD 15,120.
+
+• W9: CAD 7,560.
+
+Caption:
+
+  EXACT UI COPY
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                            62
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+  “Production payments only. Customer receipts, available cash and financing are not
+  supplied.”
+
+
+Do not title it “Cash balance.”
+
+Section D — What happens under different conditions?
+Compact selectable stress-case rows:
+
+ Case                                        Main result
+
+ Slower existing demand                      “No backlog by W12 without a repeat; Chocolate ends with 78
+                                             packs.”
+
+ Stronger existing demand                    “612 packs outstanding by W12 without a repeat.”
+
+ First run arrives later                     “270 packs temporarily unfulfilled in W4.”
+
+ Opening moves later                         “Chocolate still has 90 packs outstanding at W12.”
+
+
+These cases contain no repeat, as specified in Phase 1.
+
+Prominent label:
+
+  EXACT UI COPY
+
+
+  Stress cases test the unchanged production plan.
+
+
+Do not imply S2 has been tested against stronger demand unless that additional combination is
+calculated and added explicitly.
+
+Section E — Beyond the current window
+
+  EXACT UI COPY
+
+
+  The horizon is a boundary, not the end of the business.
+  “Vanilla falls below the example’s planning buffer in W11 under the central selective-repeat
+  case. Extend the planning window before concluding that no further run is needed.”
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                        63
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+14 Drawers and evidence access
+Sources & assumptions drawer
+Width: approximately 520 px on desktop; full-screen on mobile.
+
+Tabs within drawer:
+
+• Business context
+
+• Illustrative inputs
+
+• Calculations
+
+Opening copy:
+
+  EXACT UI COPY
+
+
+  “Public information provides context. Operating quantities, costs and scenarios were created
+  to demonstrate the planning approach.”
+
+
+Business context
+
+List the Phase 1 public sources, with supported facts and links.
+
+Private thread facts:
+
+  EXACT UI COPY
+
+
+  “Fiona’s replies supplied by the outreach team.”
+
+
+Do not expose private message screenshots in a shareable public demo.
+
+Illustrative inputs
+
+Grouped by:
+
+• Selected flavours.
+
+• Shipments and forecast.
+
+• Stock and orders.
+
+• Manufacturing terms.
+
+• Expansion.
+
+• Costs and payments.
+
+Each row shows value, classification and confirmation requirement.
+
+Calculations
+
+Plain-language expandable explanations:
+
+• Forecast formation.
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                          64
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+• Orders consuming forecast.
+
+• Stock projection.
+
+• Backlog.
+
+• Planning buffer.
+
+• Booking deadline.
+
+• Production commitments.
+
+• Storage proxy.
+
+No formulas hidden behind an “AI recommendation.”
+
+
+This week’s review drawer
+Heading:
+
+  EXACT UI COPY
+
+
+  What we would review together
+
+
+Intro:
+
+  EXACT UI COPY
+
+
+  “The analysis needs the context only your team can provide.”
+
+
+Questions:
+
+1. “Which three flavours are selected?”
+
+2. “Does the minimum apply separately to each flavour?”
+
+3. “Can flavours be repeated independently?”
+
+4. “What production dates and lead times are realistic?”
+
+5. “Which retail openings are confirmed?”
+
+6. “What recent sales or shipment records are available?”
+
+Service panel:
+
+  EXACT UI COPY
+
+
+  How ScaleSight would maintain the work
+  “We would update the agreed data, investigate changes and prepare a weekly decision brief
+  with quantities, timing and cash implications. Every two weeks, we would review the
+  business context with your team and adapt the analysis as priorities change.”
+
+
+Ownership line:
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                       65
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+  EXACT UI COPY
+
+
+  “Your team approves commitments and executes through its existing arrangements.”
+
+
+Status:
+
+  EXACT UI COPY
+
+
+  Demonstration only · No ongoing client review has taken place
+
+
+About this example
+Title:
+
+  EXACT UI COPY
+
+
+  Built around the decision in front of you
+
+
+Body:
+
+  EXACT UI COPY
+
+
+  “This example starts with a minimum-led production run. Another commitment could require
+  different analysis: a new account, a flavour change, a production delay or a different
+  manufacturing arrangement.”
+  “The workspace is how we present the work. ScaleSight’s service is maintaining the analysis
+  and preparing recommendations around your business.”
+
+
+Disclosure:
+
+  EXACT UI COPY
+
+
+  “Fromage’s public products and business context are used for illustration. This is not an
+  approved Fromage plan, a client case study or evidence of achieved results.”
+
+
+No pricing or booking banner inside the core demo.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           66
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+14.1 Drawer behaviour and navigation
+Open from bottom navigation utilities or contextual links. Sources drawer: 520 px desktop;
+full-screen mobile. Preserve the active page and scenario while open. Escape or Close dismisses
+the drawer and returns focus to its trigger. Keep keyboard focus inside the open dialog. The
+“What’s illustrative?” link opens Sources & assumptions. Links open named public sources;
+private reply screenshots are excluded. This interaction detail is proposed implementation
+guidance, not an additional source claim.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                          67
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+15 Managed review and demonstration
+flows
+Managed-review data
+Use a compact review drawer across the five pages.
+
+ Field                                     Canonical content
+
+ Review purpose                            Demonstrate how analysis changes as business context changes.
+
+ Current context                           Minimum-led initial production and prospective retail expansion.
+
+ Key assumptions awaiting                  Selected flavours, minimum structure, separate runs, lead time
+ confirmation                              and retail opening timing.
+
+ Next evidence requested                   Recent shipments, current stock, open orders and manufacturing
+                                           terms.
+
+ Founder decision                          Confirm whether this is the right upcoming commitment to
+                                           analyse.
+
+ Status                                    Illustrative; no client data connected.
+
+
+Do not invent a previous client review or write “since our last meeting.”
+
+For a live demonstration, changing an assumption may create an in-session change log,
+explicitly labelled as such.
+
+
+Four-minute demonstration sequence
+1. Planning Brief: show the decision and its conditions.
+
+2. Demand & Stock: explain the shipment baseline and missing evidence.
+
+3. Production Plan: show equal minimum runs producing different coverage.
+
+4. Retail Expansion: change the opening from W5 to W9.
+
+5. Options & Cash: compare selective and full repeats.
+
+6. Review drawer: show how their actual context would reshape the work.
+
+Closing spoken line:
+
+  EXACT UI COPY
+
+
+  “These numbers are illustrative. What I wanted to show is how we could maintain the
+  thinking around your actual commitments, and change the analysis as the business
+  changes.”
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                           68
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+Two-minute Loom sequence
+
+ Time               Page                       Action and narration
+
+ 0:00–0:20          Planning Brief             State that data is illustrative; show the conditional Chocolate
+                                               repeat review.
+
+ 0:20–0:40          Demand & Stock             Show equal minimum production against different forecast
+                                               requirements; distinguish shipments from sell-through.
+
+ 0:40–1:00          Production Plan            Show W3 booking → W9 receipt and CAD 4,800 repeat; name
+                                               independent-run assumption.
+
+ 1:00–1:20          Retail Expansion           Switch W5 to W9; explain that timing changes the window but
+                                               leaves 90 Chocolate packs outstanding.
+
+ 1:20–1:45          Options & Cash             Compare central S1/S2/S3; CAD 10,320 is lower modelled
+                                               commitment, not realised savings.
+
+ 1:45–2:00          Review drawer              Ask for actual minimum structure, terms and current records;
+                                               explain weekly analysis and bi-weekly context review.
+
+
+Use the supplied closing spoken line. This timed sequence is editorial guidance for the private
+demonstration.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                              69
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+16 Implementation architecture and
+validation gates
+Use a single fixture module and pure selectors for demand, receipts, projection, payment
+events, option summaries and recommendation state. Store money as integer CAD cents. Keep
+raw inputs separate from derived outputs. Use scenario IDs, SKU IDs and source IDs as joins.
+Static local data only; no database, authentication, APIs or LLM required to demonstrate the
+concept. These are implementation recommendations for Wahib, not product features to
+advertise to Fiona.
+
+A preview is not approval. Scenario state changes are local and reversible. The precise Phase 2
+copy should be preserved for the specified case; write concise conditional variants from
+canonical results for other cases without fabricating output. Stronger-demand case is
+unchanged production, not a test of S2. Baseline comparison panel stays labelled S1/S2/S3. Do
+not label holding more stock a failure or low closing inventory a success without its service
+context.
+
+
+Validation and release checks
+The following checks are required before the demo is presented:
+
+1. Eight-week shipment totals equal 2,046 packs.
+
+2. Latest-four-week averages equal 120 / 90 / 60.
+
+3. Account shipment rows reconcile to product/week totals.
+
+4. Opening stock equals 810 packs.
+
+5. Initial incoming stock equals 3,600 packs.
+
+6. Confirmed orders consume forecasts rather than inflate them.
+
+7. S1 total requirement equals 4,104 packs.
+
+8. S1 physical ending stock equals 516, with 210 backlog.
+
+9. S2 production commitment equals CAD 19,920 including the initial run.
+
+10. S3 equals CAD 30,240.
+
+11. S2 versus S3 difference equals CAD 10,320.
+
+12. Negative net stock never appears as negative physical inventory.
+
+13. S6 exposes the W4 service gap despite matching S1’s ending position.
+
+14. Receipt-time storage peaks are checked before demand is deducted.
+
+15. Unmodelled flavours remain null, not zero-demand products.
+
+16. Scenario receipts and payments switch together.
+
+17. Disabling independent flavour runs marks S2 infeasible.
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           70
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+18. Public retailer names never inherit synthetic operating data.
+
+19. Sensitivity cases are not labelled statistical confidence intervals.
+
+20. No revenue, profit, realised savings or actual client results are invented.
+
+
+State transition contract
+
+ Trigger                              Result
+
+ Select scenario                      Replace full scenario input set; preserve product and history-account
+                                      preferences
+
+ Reset                                Restore canonical S1 and assumed independent-run feasibility;
+                                      preserve harmless view preferences
+
+ Opening choice                       Load S0/S1/S7 completely; visibly disclose reset of earlier scenario
+                                      changes
+
+ Separate runs = no                   S2 becomes infeasible; do not substitute a computed optimum or
+                                      invent alternatives
+
+ Inspect infeasible S2                Its illustrative result may be explained with a feasibility warning; no
+                                      actionable recommendation
+
+ Open primary comparison              Show S1/S2/S3, central demand and W5 opening, independently of
+                                      stress panel
+
+ Failed calculation                   Suppress affected stale figures; show failure copy and baseline reset
+
+
+Suggested selector order: scenario inputs → group-level forecast-consumed requirement →
+receipts → per-SKU weekly ledger → payments → summaries → conditional copy. Units and
+money rounding belong in formatting helpers; arithmetic uses raw inputs and integer CAD cents.
+
+
+Acceptance evidence from this document build
+288 scenario/SKU/week net positions, eight complete financial summaries, 72 shipment rows,
+case-multiple history splits, 2,046 total historical packs, baseline averages, receipt-time peaks
+and shortfall timings were independently reconciled. This validates the supplied fixture; Wahib
+must still verify the interactive implementation against it.
+
+Release requires accessible controls, correct scenario reset behaviour, feasibility warnings,
+data-table equivalents and customer-facing disclosures across all five routes.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                             71
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+17 Source-preservation appendices
+All unique operating and UI requirements from the two supplied phases are placed in Sections
+04–16. The following appendices expand the records and provide an exact section crosswalk.
+Prompt execution instructions are not interface copy.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                            72
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+17.A Expanded shipment records
+These 72 synthetic rows expand Phase 1 §7. Each row also has source_type SYNTHETIC,
+availability_status AVAILABLE_IN_ILLUSTRATIVE_HISTORY, sell_through_packs null, and note
+“Brand shipments; consumer purchases not supplied”.
+
+ Week starting                           Account      SKU                Shipped packs
+
+ 2026-10-05                              AC-01        FR-MC              48
+
+ 2026-10-05                              AC-02        FR-MC              24
+
+ 2026-10-05                              AC-03        FR-MC              24
+
+ 2026-10-05                              AC-01        FR-VB              36
+
+ 2026-10-05                              AC-02        FR-VB              18
+
+ 2026-10-05                              AC-03        FR-VB              18
+
+ 2026-10-05                              AC-01        FR-SC              24
+
+ 2026-10-05                              AC-02        FR-SC              12
+
+ 2026-10-05                              AC-03        FR-SC              12
+
+ 2026-10-12                              AC-01        FR-MC              54
+
+ 2026-10-12                              AC-02        FR-MC              30
+
+ 2026-10-12                              AC-03        FR-MC              24
+
+ 2026-10-12                              AC-01        FR-VB              36
+
+ 2026-10-12                              AC-02        FR-VB              18
+
+ 2026-10-12                              AC-03        FR-VB              24
+
+ 2026-10-12                              AC-01        FR-SC              24
+
+ 2026-10-12                              AC-02        FR-SC              12
+
+ 2026-10-12                              AC-03        FR-SC              18
+
+ 2026-10-19                              AC-01        FR-MC              54
+
+ 2026-10-19                              AC-02        FR-MC              30
+
+ 2026-10-19                              AC-03        FR-MC              24
+
+ 2026-10-19                              AC-01        FR-VB              42
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                        73
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Week starting                           Account      SKU     Shipped packs
+
+ 2026-10-19                              AC-02        FR-VB   24
+
+ 2026-10-19                              AC-03        FR-VB   18
+
+ 2026-10-19                              AC-01        FR-SC   24
+
+ 2026-10-19                              AC-02        FR-SC   12
+
+ 2026-10-19                              AC-03        FR-SC   18
+
+ 2026-10-26                              AC-01        FR-MC   60
+
+ 2026-10-26                              AC-02        FR-MC   36
+
+ 2026-10-26                              AC-03        FR-MC   24
+
+ 2026-10-26                              AC-01        FR-VB   42
+
+ 2026-10-26                              AC-02        FR-VB   24
+
+ 2026-10-26                              AC-03        FR-VB   18
+
+ 2026-10-26                              AC-01        FR-SC   30
+
+ 2026-10-26                              AC-02        FR-SC   18
+
+ 2026-10-26                              AC-03        FR-SC   12
+
+ 2026-11-02                              AC-01        FR-MC   54
+
+ 2026-11-02                              AC-02        FR-MC   30
+
+ 2026-11-02                              AC-03        FR-MC   30
+
+ 2026-11-02                              AC-01        FR-VB   42
+
+ 2026-11-02                              AC-02        FR-VB   24
+
+ 2026-11-02                              AC-03        FR-VB   24
+
+ 2026-11-02                              AC-01        FR-SC   24
+
+ 2026-11-02                              AC-02        FR-SC   12
+
+ 2026-11-02                              AC-03        FR-SC   18
+
+ 2026-11-09                              AC-01        FR-MC   60
+
+ 2026-11-09                              AC-02        FR-MC   36
+
+ 2026-11-09                              AC-03        FR-MC   24
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                           74
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Week starting                           Account      SKU     Shipped packs
+
+ 2026-11-09                              AC-01        FR-VB   42
+
+ 2026-11-09                              AC-02        FR-VB   24
+
+ 2026-11-09                              AC-03        FR-VB   18
+
+ 2026-11-09                              AC-01        FR-SC   30
+
+ 2026-11-09                              AC-02        FR-SC   18
+
+ 2026-11-09                              AC-03        FR-SC   12
+
+ 2026-11-16                              AC-01        FR-MC   60
+
+ 2026-11-16                              AC-02        FR-MC   36
+
+ 2026-11-16                              AC-03        FR-MC   24
+
+ 2026-11-16                              AC-01        FR-VB   42
+
+ 2026-11-16                              AC-02        FR-VB   24
+
+ 2026-11-16                              AC-03        FR-VB   24
+
+ 2026-11-16                              AC-01        FR-SC   30
+
+ 2026-11-16                              AC-02        FR-SC   18
+
+ 2026-11-16                              AC-03        FR-SC   12
+
+ 2026-11-23                              AC-01        FR-MC   60
+
+ 2026-11-23                              AC-02        FR-MC   36
+
+ 2026-11-23                              AC-03        FR-MC   30
+
+ 2026-11-23                              AC-01        FR-VB   48
+
+ 2026-11-23                              AC-02        FR-VB   24
+
+ 2026-11-23                              AC-03        FR-VB   24
+
+ 2026-11-23                              AC-01        FR-SC   30
+
+ 2026-11-23                              AC-02        FR-SC   18
+
+ 2026-11-23                              AC-03        FR-SC   18
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                           75
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+17.B Complete weekly net projections
+Each scenario table lists end-of-week NET positions. Derive physical=max(net,0),
+backlog=max(-net,0). Units: retail packs.
+
+S0
+
+ Week                         Chocolate net           Vanilla net      Strawberry net
+
+ W1                           240                     180              120
+
+ W2                           120                     90               60
+
+ W3                           1200                    1200             1200
+
+ W4                           1080                    1110             1140
+
+ W5                           960                     1020             1080
+
+ W6                           840                     930              1020
+
+ W7                           720                     840              960
+
+ W8                           600                     750              900
+
+ W9                           480                     660              840
+
+ W10                          360                     570              780
+
+ W11                          240                     480              720
+
+ W12                          120                     390              660
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                     76
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S1
+
+ Week                         Chocolate net           Vanilla net   Strawberry net
+
+ W1                           240                     180           120
+
+ W2                           120                     90            60
+
+ W3                           1200                    1200          1200
+
+ W4                           1080                    1110          1140
+
+ W5                           840                     900           960
+
+ W6                           690                     786           882
+
+ W7                           540                     672           804
+
+ W8                           390                     558           726
+
+ W9                           240                     444           648
+
+ W10                          90                      330           570
+
+ W11                          -60                     216           492
+
+ W12                          -210                    102           414
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                  77
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S2
+
+ Week                         Chocolate net           Vanilla net   Strawberry net
+
+ W1                           240                     180           120
+
+ W2                           120                     90            60
+
+ W3                           1200                    1200          1200
+
+ W4                           1080                    1110          1140
+
+ W5                           840                     900           960
+
+ W6                           690                     786           882
+
+ W7                           540                     672           804
+
+ W8                           390                     558           726
+
+ W9                           1440                    444           648
+
+ W10                          1290                    330           570
+
+ W11                          1140                    216           492
+
+ W12                          990                     102           414
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                  78
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S3
+
+ Week                         Chocolate net           Vanilla net   Strawberry net
+
+ W1                           240                     180           120
+
+ W2                           120                     90            60
+
+ W3                           1200                    1200          1200
+
+ W4                           1080                    1110          1140
+
+ W5                           840                     900           960
+
+ W6                           690                     786           882
+
+ W7                           540                     672           804
+
+ W8                           390                     558           726
+
+ W9                           1440                    1644          1848
+
+ W10                          1290                    1530          1770
+
+ W11                          1140                    1416          1692
+
+ W12                          990                     1302          1614
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                  79
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S4
+
+ Week                         Chocolate net           Vanilla net   Strawberry net
+
+ W1                           264                     198           132
+
+ W2                           168                     126           84
+
+ W3                           1272                    1254          1236
+
+ W4                           1176                    1182          1188
+
+ W5                           960                     990           1020
+
+ W6                           834                     894           954
+
+ W7                           708                     798           888
+
+ W8                           582                     702           822
+
+ W9                           456                     606           756
+
+ W10                          330                     510           690
+
+ W11                          204                     414           624
+
+ W12                          78                      318           558
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                  80
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S5
+
+ Week                         Chocolate net           Vanilla net   Strawberry net
+
+ W1                           216                     162           108
+
+ W2                           72                      54            36
+
+ W3                           1128                    1146          1164
+
+ W4                           984                     1038          1092
+
+ W5                           720                     810           900
+
+ W6                           546                     678           810
+
+ W7                           372                     546           720
+
+ W8                           198                     414           630
+
+ W9                           24                      282           540
+
+ W10                          -150                    150           450
+
+ W11                          -324                    18            360
+
+ W12                          -498                    -114          270
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                  81
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S6
+
+ Week                         Chocolate net           Vanilla net   Strawberry net
+
+ W1                           240                     180           120
+
+ W2                           120                     90            60
+
+ W3                           0                       0             0
+
+ W4                           -120                    -90           -60
+
+ W5                           840                     900           960
+
+ W6                           690                     786           882
+
+ W7                           540                     672           804
+
+ W8                           390                     558           726
+
+ W9                           240                     444           648
+
+ W10                          90                      330           570
+
+ W11                          -60                     216           492
+
+ W12                          -210                    102           414
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                  82
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S7
+
+ Week                         Chocolate net           Vanilla net            Strawberry net
+
+ W1                           240                     180                    120
+
+ W2                           120                     90                     60
+
+ W3                           1200                    1200                   1200
+
+ W4                           1080                    1110                   1140
+
+ W5                           960                     1020                   1080
+
+ W6                           840                     930                    1020
+
+ W7                           720                     840                    960
+
+ W8                           600                     750                    900
+
+ W9                           360                     540                    720
+
+ W10                          210                     426                    642
+
+ W11                          60                      312                    564
+
+ W12                          -90                     198                    486
+
+
+
+Machine-readable expected summaries
+Expected summary S0
+
+ Field                                                              Value
+
+ scenario                                                           "S0"
+
+ ending_net                                                         [120, 390, 660]
+
+ backlog                                                            0
+
+ physical_stock                                                     1170
+
+ production_payments_CAD                                            15120
+
+ ending_inventory_value_CAD                                         5022.0
+
+ storage_proxy_CAD                                                  986.4
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           83
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+Expected summary S1
+
+ Field                                                       Value
+
+ scenario                                                    "S1"
+
+ ending_net                                                  [-210, 102, 414]
+
+ backlog                                                     210
+
+ physical_stock                                              516
+
+ production_payments_CAD                                     15120
+
+ ending_inventory_value_CAD                                  2250.0
+
+ storage_proxy_CAD                                           801.36
+
+
+Expected summary S2
+
+ Field                                                       Value
+
+ scenario                                                    "S2"
+
+ ending_net                                                  [990, 102, 414]
+
+ backlog                                                     0
+
+ physical_stock                                              1506
+
+ production_payments_CAD                                     19920.0
+
+ ending_inventory_value_CAD                                  6210.0
+
+ storage_proxy_CAD                                           982.56
+
+
+Expected summary S3
+
+ Field                                                   Value
+
+ scenario                                                "S3"
+
+ ending_net                                              [990, 1302, 1614]
+
+ backlog                                                 0
+
+ physical_stock                                          3906
+
+ production_payments_CAD                                 30240.0
+
+ ending_inventory_value_CAD                              16530.0
+
+ storage_proxy_CAD                                       1366.56
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                             84
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+Expected summary S4
+
+ Field                                                    Value
+
+ scenario                                                 "S4"
+
+ ending_net                                               [78, 318, 558]
+
+ backlog                                                  0
+
+ physical_stock                                           954
+
+ production_payments_CAD                                  15120
+
+ ending_inventory_value_CAD                               4102.8
+
+ storage_proxy_CAD                                        959.04
+
+
+Expected summary S5
+
+ Field                                                   Value
+
+ scenario                                                "S5"
+
+ ending_net                                              [-498, -114, 270]
+
+ backlog                                                 612
+
+ physical_stock                                          270
+
+ production_payments_CAD                                 15120
+
+ ending_inventory_value_CAD                              1188.0
+
+ storage_proxy_CAD                                       665.52
+
+
+Expected summary S6
+
+ Field                                                   Value
+
+ scenario                                                "S6"
+
+ ending_net                                              [-210, 102, 414]
+
+ backlog                                                 210
+
+ physical_stock                                          516
+
+ production_payments_CAD                                 15120
+
+ ending_inventory_value_CAD                              2250.0
+
+ storage_proxy_CAD                                       524.16
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                          85
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+Expected summary S7
+
+ Field                                                   Value
+
+ scenario                                                "S7"
+
+ ending_net                                              [-90, 198, 486]
+
+ backlog                                                 90
+
+ physical_stock                                          684
+
+ production_payments_CAD                                 15120
+
+ ending_inventory_value_CAD                              2970.0
+
+ storage_proxy_CAD                                       915.12
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                        86
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+17.C Full physical-stock and backlog
+ledger
+Calculated from the same canonical inputs; retail packs. Requirements are analytical weekly
+quantities, not case-rounded executable orders. Buffer = two recurring weeks; opening fill
+excluded.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           87
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S0 — SKU/week detail
+
+ Week           SKU             Req.           Receipt   Net    Physical   Backlog   Buffer
+
+ W1             FR-MC           120            0         240    240        0         240
+
+ W1             FR-VB           90             0         180    180        0         180
+
+ W1             FR-SC           60             0         120    120        0         120
+
+ W2             FR-MC           120            0         120    120        0         240
+
+ W2             FR-VB           90             0         90     90         0         180
+
+ W2             FR-SC           60             0         60     60         0         120
+
+ W3             FR-MC           120            1200      1200   1200       0         240
+
+ W3             FR-VB           90             1200      1200   1200       0         180
+
+ W3             FR-SC           60             1200      1200   1200       0         120
+
+ W4             FR-MC           120            0         1080   1080       0         240
+
+ W4             FR-VB           90             0         1110   1110       0         180
+
+ W4             FR-SC           60             0         1140   1140       0         120
+
+ W5             FR-MC           120            0         960    960        0         240
+
+ W5             FR-VB           90             0         1020   1020       0         180
+
+ W5             FR-SC           60             0         1080   1080       0         120
+
+ W6             FR-MC           120            0         840    840        0         240
+
+ W6             FR-VB           90             0         930    930        0         180
+
+ W6             FR-SC           60             0         1020   1020       0         120
+
+ W7             FR-MC           120            0         720    720        0         240
+
+ W7             FR-VB           90             0         840    840        0         180
+
+ W7             FR-SC           60             0         960    960        0         120
+
+ W8             FR-MC           120            0         600    600        0         240
+
+ W8             FR-VB           90             0         750    750        0         180
+
+ W8             FR-SC           60             0         900    900        0         120
+
+ W9             FR-MC           120            0         480    480        0         240
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           88
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Week           SKU             Req.           Receipt   Net   Physical   Backlog   Buffer
+
+ W9             FR-VB           90             0         660   660        0         180
+
+ W9             FR-SC           60             0         840   840        0         120
+
+ W10            FR-MC           120            0         360   360        0         240
+
+ W10            FR-VB           90             0         570   570        0         180
+
+ W10            FR-SC           60             0         780   780        0         120
+
+ W11            FR-MC           120            0         240   240        0         240
+
+ W11            FR-VB           90             0         480   480        0         180
+
+ W11            FR-SC           60             0         720   720        0         120
+
+ W12            FR-MC           120            0         120   120        0         240
+
+ W12            FR-VB           90             0         390   390        0         180
+
+ W12            FR-SC           60             0         660   660        0         120
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                          89
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S1 — SKU/week detail
+
+ Week           SKU             Req.           Receipt   Net    Physical   Backlog   Buffer
+
+ W1             FR-MC           120            0         240    240        0         240
+
+ W1             FR-VB           90             0         180    180        0         180
+
+ W1             FR-SC           60             0         120    120        0         120
+
+ W2             FR-MC           120            0         120    120        0         240
+
+ W2             FR-VB           90             0         90     90         0         180
+
+ W2             FR-SC           60             0         60     60         0         120
+
+ W3             FR-MC           120            1200      1200   1200       0         240
+
+ W3             FR-VB           90             1200      1200   1200       0         180
+
+ W3             FR-SC           60             1200      1200   1200       0         120
+
+ W4             FR-MC           120            0         1080   1080       0         240
+
+ W4             FR-VB           90             0         1110   1110       0         180
+
+ W4             FR-SC           60             0         1140   1140       0         120
+
+ W5             FR-MC           240            0         840    840        0         240
+
+ W5             FR-VB           210            0         900    900        0         180
+
+ W5             FR-SC           180            0         960    960        0         120
+
+ W6             FR-MC           150            0         690    690        0         300
+
+ W6             FR-VB           114            0         786    786        0         228
+
+ W6             FR-SC           78             0         882    882        0         156
+
+ W7             FR-MC           150            0         540    540        0         300
+
+ W7             FR-VB           114            0         672    672        0         228
+
+ W7             FR-SC           78             0         804    804        0         156
+
+ W8             FR-MC           150            0         390    390        0         300
+
+ W8             FR-VB           114            0         558    558        0         228
+
+ W8             FR-SC           78             0         726    726        0         156
+
+ W9             FR-MC           150            0         240    240        0         300
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           90
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Week           SKU             Req.           Receipt   Net    Physical   Backlog   Buffer
+
+ W9             FR-VB           114            0         444    444        0         228
+
+ W9             FR-SC           78             0         648    648        0         156
+
+ W10            FR-MC           150            0         90     90         0         300
+
+ W10            FR-VB           114            0         330    330        0         228
+
+ W10            FR-SC           78             0         570    570        0         156
+
+ W11            FR-MC           150            0         -60    0          60        300
+
+ W11            FR-VB           114            0         216    216        0         228
+
+ W11            FR-SC           78             0         492    492        0         156
+
+ W12            FR-MC           150            0         -210   0          210       300
+
+ W12            FR-VB           114            0         102    102        0         228
+
+ W12            FR-SC           78             0         414    414        0         156
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           91
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S2 — SKU/week detail
+
+ Week           SKU             Req.           Receipt   Net    Physical   Backlog   Buffer
+
+ W1             FR-MC           120            0         240    240        0         240
+
+ W1             FR-VB           90             0         180    180        0         180
+
+ W1             FR-SC           60             0         120    120        0         120
+
+ W2             FR-MC           120            0         120    120        0         240
+
+ W2             FR-VB           90             0         90     90         0         180
+
+ W2             FR-SC           60             0         60     60         0         120
+
+ W3             FR-MC           120            1200      1200   1200       0         240
+
+ W3             FR-VB           90             1200      1200   1200       0         180
+
+ W3             FR-SC           60             1200      1200   1200       0         120
+
+ W4             FR-MC           120            0         1080   1080       0         240
+
+ W4             FR-VB           90             0         1110   1110       0         180
+
+ W4             FR-SC           60             0         1140   1140       0         120
+
+ W5             FR-MC           240            0         840    840        0         240
+
+ W5             FR-VB           210            0         900    900        0         180
+
+ W5             FR-SC           180            0         960    960        0         120
+
+ W6             FR-MC           150            0         690    690        0         300
+
+ W6             FR-VB           114            0         786    786        0         228
+
+ W6             FR-SC           78             0         882    882        0         156
+
+ W7             FR-MC           150            0         540    540        0         300
+
+ W7             FR-VB           114            0         672    672        0         228
+
+ W7             FR-SC           78             0         804    804        0         156
+
+ W8             FR-MC           150            0         390    390        0         300
+
+ W8             FR-VB           114            0         558    558        0         228
+
+ W8             FR-SC           78             0         726    726        0         156
+
+ W9             FR-MC           150            1200      1440   1440       0         300
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           92
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Week           SKU             Req.           Receipt   Net    Physical   Backlog   Buffer
+
+ W9             FR-VB           114            0         444    444        0         228
+
+ W9             FR-SC           78             0         648    648        0         156
+
+ W10            FR-MC           150            0         1290   1290       0         300
+
+ W10            FR-VB           114            0         330    330        0         228
+
+ W10            FR-SC           78             0         570    570        0         156
+
+ W11            FR-MC           150            0         1140   1140       0         300
+
+ W11            FR-VB           114            0         216    216        0         228
+
+ W11            FR-SC           78             0         492    492        0         156
+
+ W12            FR-MC           150            0         990    990        0         300
+
+ W12            FR-VB           114            0         102    102        0         228
+
+ W12            FR-SC           78             0         414    414        0         156
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           93
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S3 — SKU/week detail
+
+ Week           SKU             Req.           Receipt   Net    Physical   Backlog   Buffer
+
+ W1             FR-MC           120            0         240    240        0         240
+
+ W1             FR-VB           90             0         180    180        0         180
+
+ W1             FR-SC           60             0         120    120        0         120
+
+ W2             FR-MC           120            0         120    120        0         240
+
+ W2             FR-VB           90             0         90     90         0         180
+
+ W2             FR-SC           60             0         60     60         0         120
+
+ W3             FR-MC           120            1200      1200   1200       0         240
+
+ W3             FR-VB           90             1200      1200   1200       0         180
+
+ W3             FR-SC           60             1200      1200   1200       0         120
+
+ W4             FR-MC           120            0         1080   1080       0         240
+
+ W4             FR-VB           90             0         1110   1110       0         180
+
+ W4             FR-SC           60             0         1140   1140       0         120
+
+ W5             FR-MC           240            0         840    840        0         240
+
+ W5             FR-VB           210            0         900    900        0         180
+
+ W5             FR-SC           180            0         960    960        0         120
+
+ W6             FR-MC           150            0         690    690        0         300
+
+ W6             FR-VB           114            0         786    786        0         228
+
+ W6             FR-SC           78             0         882    882        0         156
+
+ W7             FR-MC           150            0         540    540        0         300
+
+ W7             FR-VB           114            0         672    672        0         228
+
+ W7             FR-SC           78             0         804    804        0         156
+
+ W8             FR-MC           150            0         390    390        0         300
+
+ W8             FR-VB           114            0         558    558        0         228
+
+ W8             FR-SC           78             0         726    726        0         156
+
+ W9             FR-MC           150            1200      1440   1440       0         300
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           94
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Week           SKU             Req.           Receipt   Net    Physical   Backlog   Buffer
+
+ W9             FR-VB           114            1200      1644   1644       0         228
+
+ W9             FR-SC           78             1200      1848   1848       0         156
+
+ W10            FR-MC           150            0         1290   1290       0         300
+
+ W10            FR-VB           114            0         1530   1530       0         228
+
+ W10            FR-SC           78             0         1770   1770       0         156
+
+ W11            FR-MC           150            0         1140   1140       0         300
+
+ W11            FR-VB           114            0         1416   1416       0         228
+
+ W11            FR-SC           78             0         1692   1692       0         156
+
+ W12            FR-MC           150            0         990    990        0         300
+
+ W12            FR-VB           114            0         1302   1302       0         228
+
+ W12            FR-SC           78             0         1614   1614       0         156
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           95
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S4 — SKU/week detail
+
+ Week           SKU             Req.           Receipt   Net      Physical   Backlog   Buffer
+
+ W1             FR-MC           96.0           0         264.0    264.0      0         192.0
+
+ W1             FR-VB           72.0           0         198.0    198.0      0         144.0
+
+ W1             FR-SC           48.0           0         132.0    132.0      0         96.0
+
+ W2             FR-MC           96.0           0         168.0    168.0      0         192.0
+
+ W2             FR-VB           72.0           0         126.0    126.0      0         144.0
+
+ W2             FR-SC           48.0           0         84.0     84.0       0         96.0
+
+ W3             FR-MC           96.0           1200      1272.0   1272.0     0         192.0
+
+ W3             FR-VB           72.0           1200      1254.0   1254.0     0         144.0
+
+ W3             FR-SC           48.0           1200      1236.0   1236.0     0         96.0
+
+ W4             FR-MC           96.0           0         1176.0   1176.0     0         192.0
+
+ W4             FR-VB           72.0           0         1182.0   1182.0     0         144.0
+
+ W4             FR-SC           48.0           0         1188.0   1188.0     0         96.0
+
+ W5             FR-MC           216.0          0         960.0    960.0      0         192.0
+
+ W5             FR-VB           192.0          0         990.0    990.0      0         144.0
+
+ W5             FR-SC           168.0          0         1020.0   1020.0     0         96.0
+
+ W6             FR-MC           126.0          0         834.0    834.0      0         252.0
+
+ W6             FR-VB           96.0           0         894.0    894.0      0         192.0
+
+ W6             FR-SC           66.0           0         954.0    954.0      0         132.0
+
+ W7             FR-MC           126.0          0         708.0    708.0      0         252.0
+
+ W7             FR-VB           96.0           0         798.0    798.0      0         192.0
+
+ W7             FR-SC           66.0           0         888.0    888.0      0         132.0
+
+ W8             FR-MC           126.0          0         582.0    582.0      0         252.0
+
+ W8             FR-VB           96.0           0         702.0    702.0      0         192.0
+
+ W8             FR-SC           66.0           0         822.0    822.0      0         132.0
+
+ W9             FR-MC           126.0          0         456.0    456.0      0         252.0
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                             96
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Week           SKU             Req.           Receipt   Net     Physical   Backlog   Buffer
+
+ W9             FR-VB           96.0           0         606.0   606.0      0         192.0
+
+ W9             FR-SC           66.0           0         756.0   756.0      0         132.0
+
+ W10            FR-MC           126.0          0         330.0   330.0      0         252.0
+
+ W10            FR-VB           96.0           0         510.0   510.0      0         192.0
+
+ W10            FR-SC           66.0           0         690.0   690.0      0         132.0
+
+ W11            FR-MC           126.0          0         204.0   204.0      0         252.0
+
+ W11            FR-VB           96.0           0         414.0   414.0      0         192.0
+
+ W11            FR-SC           66.0           0         624.0   624.0      0         132.0
+
+ W12            FR-MC           126.0          0         78.0    78.0       0         252.0
+
+ W12            FR-VB           96.0           0         318.0   318.0      0         192.0
+
+ W12            FR-SC           66.0           0         558.0   558.0      0         132.0
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                            97
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S5 — SKU/week detail
+
+ Week           SKU             Req.           Receipt   Net      Physical   Backlog   Buffer
+
+ W1             FR-MC           144.0          0         216.0    216.0      0         288.0
+
+ W1             FR-VB           108.0          0         162.0    162.0      0         216.0
+
+ W1             FR-SC           72.0           0         108.0    108.0      0         144.0
+
+ W2             FR-MC           144.0          0         72.0     72.0       0         288.0
+
+ W2             FR-VB           108.0          0         54.0     54.0       0         216.0
+
+ W2             FR-SC           72.0           0         36.0     36.0       0         144.0
+
+ W3             FR-MC           144.0          1200      1128.0   1128.0     0         288.0
+
+ W3             FR-VB           108.0          1200      1146.0   1146.0     0         216.0
+
+ W3             FR-SC           72.0           1200      1164.0   1164.0     0         144.0
+
+ W4             FR-MC           144.0          0         984.0    984.0      0         288.0
+
+ W4             FR-VB           108.0          0         1038.0   1038.0     0         216.0
+
+ W4             FR-SC           72.0           0         1092.0   1092.0     0         144.0
+
+ W5             FR-MC           264.0          0         720.0    720.0      0         288.0
+
+ W5             FR-VB           228.0          0         810.0    810.0      0         216.0
+
+ W5             FR-SC           192.0          0         900.0    900.0      0         144.0
+
+ W6             FR-MC           174.0          0         546.0    546.0      0         348.0
+
+ W6             FR-VB           132.0          0         678.0    678.0      0         264.0
+
+ W6             FR-SC           90.0           0         810.0    810.0      0         180.0
+
+ W7             FR-MC           174.0          0         372.0    372.0      0         348.0
+
+ W7             FR-VB           132.0          0         546.0    546.0      0         264.0
+
+ W7             FR-SC           90.0           0         720.0    720.0      0         180.0
+
+ W8             FR-MC           174.0          0         198.0    198.0      0         348.0
+
+ W8             FR-VB           132.0          0         414.0    414.0      0         264.0
+
+ W8             FR-SC           90.0           0         630.0    630.0      0         180.0
+
+ W9             FR-MC           174.0          0         24.0     24.0       0         348.0
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                             98
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Week           SKU             Req.           Receipt   Net      Physical   Backlog   Buffer
+
+ W9             FR-VB           132.0          0         282.0    282.0      0         264.0
+
+ W9             FR-SC           90.0           0         540.0    540.0      0         180.0
+
+ W10            FR-MC           174.0          0         -150.0   0          150.0     348.0
+
+ W10            FR-VB           132.0          0         150.0    150.0      0         264.0
+
+ W10            FR-SC           90.0           0         450.0    450.0      0         180.0
+
+ W11            FR-MC           174.0          0         -324.0   0          324.0     348.0
+
+ W11            FR-VB           132.0          0         18.0     18.0       0         264.0
+
+ W11            FR-SC           90.0           0         360.0    360.0      0         180.0
+
+ W12            FR-MC           174.0          0         -498.0   0          498.0     348.0
+
+ W12            FR-VB           132.0          0         -114.0   0          114.0     264.0
+
+ W12            FR-SC           90.0           0         270.0    270.0      0         180.0
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                             99
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S6 — SKU/week detail
+
+ Week           SKU             Req.           Receipt   Net    Physical   Backlog   Buffer
+
+ W1             FR-MC           120            0         240    240        0         240
+
+ W1             FR-VB           90             0         180    180        0         180
+
+ W1             FR-SC           60             0         120    120        0         120
+
+ W2             FR-MC           120            0         120    120        0         240
+
+ W2             FR-VB           90             0         90     90         0         180
+
+ W2             FR-SC           60             0         60     60         0         120
+
+ W3             FR-MC           120            0         0      0          0         240
+
+ W3             FR-VB           90             0         0      0          0         180
+
+ W3             FR-SC           60             0         0      0          0         120
+
+ W4             FR-MC           120            0         -120   0          120       240
+
+ W4             FR-VB           90             0         -90    0          90        180
+
+ W4             FR-SC           60             0         -60    0          60        120
+
+ W5             FR-MC           240            1200      840    840        0         240
+
+ W5             FR-VB           210            1200      900    900        0         180
+
+ W5             FR-SC           180            1200      960    960        0         120
+
+ W6             FR-MC           150            0         690    690        0         300
+
+ W6             FR-VB           114            0         786    786        0         228
+
+ W6             FR-SC           78             0         882    882        0         156
+
+ W7             FR-MC           150            0         540    540        0         300
+
+ W7             FR-VB           114            0         672    672        0         228
+
+ W7             FR-SC           78             0         804    804        0         156
+
+ W8             FR-MC           150            0         390    390        0         300
+
+ W8             FR-VB           114            0         558    558        0         228
+
+ W8             FR-SC           78             0         726    726        0         156
+
+ W9             FR-MC           150            0         240    240        0         300
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           100
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Week           SKU             Req.           Receipt   Net    Physical   Backlog   Buffer
+
+ W9             FR-VB           114            0         444    444        0         228
+
+ W9             FR-SC           78             0         648    648        0         156
+
+ W10            FR-MC           150            0         90     90         0         300
+
+ W10            FR-VB           114            0         330    330        0         228
+
+ W10            FR-SC           78             0         570    570        0         156
+
+ W11            FR-MC           150            0         -60    0          60        300
+
+ W11            FR-VB           114            0         216    216        0         228
+
+ W11            FR-SC           78             0         492    492        0         156
+
+ W12            FR-MC           150            0         -210   0          210       300
+
+ W12            FR-VB           114            0         102    102        0         228
+
+ W12            FR-SC           78             0         414    414        0         156
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           101
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+S7 — SKU/week detail
+
+ Week           SKU             Req.           Receipt   Net    Physical   Backlog   Buffer
+
+ W1             FR-MC           120            0         240    240        0         240
+
+ W1             FR-VB           90             0         180    180        0         180
+
+ W1             FR-SC           60             0         120    120        0         120
+
+ W2             FR-MC           120            0         120    120        0         240
+
+ W2             FR-VB           90             0         90     90         0         180
+
+ W2             FR-SC           60             0         60     60         0         120
+
+ W3             FR-MC           120            1200      1200   1200       0         240
+
+ W3             FR-VB           90             1200      1200   1200       0         180
+
+ W3             FR-SC           60             1200      1200   1200       0         120
+
+ W4             FR-MC           120            0         1080   1080       0         240
+
+ W4             FR-VB           90             0         1110   1110       0         180
+
+ W4             FR-SC           60             0         1140   1140       0         120
+
+ W5             FR-MC           120            0         960    960        0         240
+
+ W5             FR-VB           90             0         1020   1020       0         180
+
+ W5             FR-SC           60             0         1080   1080       0         120
+
+ W6             FR-MC           120            0         840    840        0         240
+
+ W6             FR-VB           90             0         930    930        0         180
+
+ W6             FR-SC           60             0         1020   1020       0         120
+
+ W7             FR-MC           120            0         720    720        0         240
+
+ W7             FR-VB           90             0         840    840        0         180
+
+ W7             FR-SC           60             0         960    960        0         120
+
+ W8             FR-MC           120            0         600    600        0         240
+
+ W8             FR-VB           90             0         750    750        0         180
+
+ W8             FR-SC           60             0         900    900        0         120
+
+ W9             FR-MC           240            0         360    360        0         240
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                           102
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Week           SKU             Req.           Receipt   Net   Physical   Backlog   Buffer
+
+ W9             FR-VB           210            0         540   540        0         180
+
+ W9             FR-SC           180            0         720   720        0         120
+
+ W10            FR-MC           150            0         210   210        0         300
+
+ W10            FR-VB           114            0         426   426        0         228
+
+ W10            FR-SC           78             0         642   642        0         156
+
+ W11            FR-MC           150            0         60    60         0         300
+
+ W11            FR-VB           114            0         312   312        0         228
+
+ W11            FR-SC           78             0         564   564        0         156
+
+ W12            FR-MC           150            0         -90   0          90        300
+
+ W12            FR-VB           114            0         198   198        0         228
+
+ W12            FR-SC           78             0         486   486        0         156
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                          103
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+17.D Phase-by-phase section
+crosswalk
+ Source section                        Source heading                                      Guide
+                                                                                           section
+
+ Phase 1 §1                            Evidence boundaries                                 06
+
+ Phase 1 §2                            Public-source register                              06
+
+ Phase 1 §3                            Confirmed conversation facts and outstanding        04
+                                       questions
+
+ Phase 1 §4                            Canonical planning calendar                         07
+
+ Phase 1 §5                            Product master                                      07
+
+ Phase 1 §6                            Account and channel master                          07
+
+ Phase 1 §7                            Historical demand dataset                           08
+
+ Phase 1 §8                            Forecast specification                              08
+
+ Phase 1 §9                            Opening inventory and incoming supply               08
+
+ Phase 1 §10                           Production constraints and commercial assumptions   08
+
+ Phase 1 §11                           Existing retail commitments                         08
+
+ Phase 1 §12                           Retail expansion dataset                            08
+
+ Phase 1 §13                           Cost and payment datasets                           08
+
+ Phase 1 §14                           Calculation rules                                   09
+
+ Phase 1 §15                           Canonical central projection                        10
+
+ Phase 1 §16                           Scenario catalogue and checked results              10
+
+ Phase 1 §17                           Capacity and shelf-life checks                      10
+
+ Phase 1 §18                           Recommendation records                              11
+
+ Phase 1 §19 / Page 1                  Planning Brief                                      13.1
+
+ Phase 1 §19 / Page 2                  Demand & Stock                                      13.2
+
+ Phase 1 §19 / Page 3                  Production Plan                                     13.3
+
+ Phase 1 §19 / Page 4                  Retail Expansion                                    13.4
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                                  104
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+ Source section                        Source heading                          Guide
+                                                                               section
+
+ Phase 1 §19 / Page 5                  Options & Cash                          13.5
+
+ Phase 1 §20                           Managed-review data                     15
+
+ Phase 1 §21                           Dataset inventory and relationships     09
+
+ Phase 1 §22                           Validation and release checks           16
+
+ Phase 2 §1                            Brand direction                         12
+
+ Phase 2 §2                            Overall structure and navigation        12
+
+ Phase 2 §3                            Shared scenario behaviour               12
+
+ Phase 2 §4                            Shared language and formatting          12
+
+ Phase 2 §5                            Page 1 — Planning Brief                 13.1
+
+ Phase 2 §6                            Page 2 — Demand & Stock                 13.2
+
+ Phase 2 §7                            Page 3 — Production Plan                13.3
+
+ Phase 2 §8                            Page 4 — Retail Expansion               13.4
+
+ Phase 2 §9                            Page 5 — Options & Cash                 13.5
+
+ Phase 2 §10                           Sources & assumptions drawer            14
+
+ Phase 2 §11                           This week’s review drawer               14
+
+ Phase 2 §12                           About this example                      14
+
+ Phase 2 §13                           Interaction and implementation rules    12
+
+ Phase 2 §14                           Responsive behaviour                    12
+
+ Phase 2 §15                           Four-minute demonstration sequence      15
+
+
+Editorial treatment: tracking parameters are removed from source URLs. Phase completion
+notes are omitted as process commentary. Source timing references retain the research-session
+attribution. Authoritative addendum A–S governs superseded shorthand; the proposed
+account-priority statement is explicitly separated from the implemented aggregate per-SKU
+backlog convention. No operating inputs or canonical fixture outputs were changed.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                       105
+MINIMUM-RUN & RETAIL GROWTH PLANNING / DEVELOPER GUIDE
+
+
+
+
+18 Real-client confirmation checklist
+Before substituting actual Fromage data, confirm:
+
+1. The selected three flavours and the actual pack/case configuration.
+
+2. Whether minimums are per flavour, shared batch or full run; allowable increments and
+independent-repeat feasibility.
+
+3. Initial-run status, usable receipt dates, payment milestones, usable lead times and genuinely
+available supplier slots.
+
+4. Current usable/allocated stock, open orders, recent shipments, stock constraints and any
+retailer sell-through.
+
+5. Prospective versus booked openings, opening fills, replenishment assumptions and
+commercial delivery expectations.
+
+6. Product costs, taxes, payment terms, usable shelf life, freezer capacity and storage charges.
+
+7. Existing planning tools, data owners, decision rights and a practical weekly refresh process.
+
+8. Suitable forecast horizon, actual seasonality and the period after W12, particularly Vanilla’s
+next commitment.
+
+9. Whether an explicit demand-class priority ledger is required before making existing-account
+versus expansion service claims.
+
+10. Which upcoming commitment the team wants analysed first and who can approve it.
+
+No bank balance, revenue, margin, actual savings or optimised commercial plan can be inferred
+from this synthetic fixture. The guide supports a reviewable demonstration; commercial
+recommendations require actual terms and business context.
+
+
+
+
+ScaleSight / Fromage | Wahib Developer Guide | v1.0                                             106
+
