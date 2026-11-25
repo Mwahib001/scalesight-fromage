@@ -57,7 +57,7 @@ export function PageHeader({
     <header className="page-heading">
       <div>
         <div className="eyebrow">{eyebrow}</div>
-        <h1>{title}</h1>
+        <h1 tabIndex={-1}>{title}</h1>
         <p>{sub}</p>
       </div>
       <span className="context-chip">{L.context}</span>

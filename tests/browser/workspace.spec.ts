@@ -119,7 +119,7 @@ test("drawers trap focus, close with Escape and return focus", async ({
   await page.goto("/brief");
   const trigger = page.getByRole("button", { name: "What’s illustrative?" });
   await trigger.click();
-  const dialog = page.getByRole("dialog");
+  const dialog = page.locator("dialog.drawer");
   await expect(dialog).toBeVisible();
   await page.getByRole("tab", { name: "Calculations", exact: true }).click();
   await page
@@ -186,9 +186,9 @@ test("mobile drawer returns focus to its visible navigation trigger", async ({
     exact: true,
   });
   await trigger.click();
-  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.locator("dialog.drawer")).toBeVisible();
   await page.keyboard.press("Escape");
-  await expect(page.getByRole("dialog")).not.toBeVisible();
+  await expect(page.locator("dialog.drawer")).not.toBeVisible();
   await expect(trigger).toBeVisible();
   await expect(trigger).toBeFocused();
 });

@@ -906,8 +906,7 @@ select {
   line-height: 1.7;
   box-shadow: 0 4px 20px #0002;
 }
-.tooltip:hover .tip-content,
-.tooltip:focus-within .tip-content {
+.tip-content:not([hidden]) {
   display: block;
 }
 .constraint-strip {
@@ -1905,5 +1904,140 @@ select {
   .formula summary {
     padding-top: 12px;
     padding-bottom: 12px;
+  }
+}
+
+/* Navigation stays usable on short landscape screens and at enlarged text sizes. */
+.sidebar {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.sidebar > * {
+  flex-shrink: 0;
+}
+.nav-close {
+  display: none;
+}
+.page-heading h1:focus {
+  outline: none;
+}
+@media (max-width: 768px) {
+  .nav-close {
+    display: inline-flex;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 9px;
+  }
+  .grid.two > .card .button,
+  .tip-trigger,
+  .segmented button,
+  .reset-button {
+    min-height: 44px;
+  }
+  .tip-trigger {
+    min-width: 44px;
+  }
+}
+
+/* Let enlarged text wrap instead of imposing intrinsic control widths. */
+.filter-row label {
+  min-width: 0;
+}
+.runs-control {
+  min-inline-size: 0;
+}
+.runs-control legend {
+  max-width: 100%;
+}
+.segmented {
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .tip-content {
+    position: fixed;
+    inset: auto 12px 12px;
+    width: auto;
+    max-width: none;
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto;
+  }
+}
+
+/* Preserve readable chart labels; compact screens scroll the full-size chart. */
+.line-chart {
+  min-width: 57.5rem;
+}
+.line-chart text {
+  font-size: 12px;
+}
+.bar-group,
+.payment-options strong {
+  font-size: 0.75rem;
+}
+.payment-chart {
+  min-width: 57.5rem;
+}
+@media (min-width: 551px) and (max-width: 768px) {
+  .grid.three,
+  .option-cards,
+  .evidence-labels {
+    grid-template-columns: 1fr;
+  }
+  .metric {
+    min-height: 140px;
+    padding: 22px;
+  }
+  .metric > span,
+  .metric p,
+  .option-card dt,
+  .option-status,
+  .evidence-labels > span,
+  .evidence-labels b {
+    font-size: 0.8125rem;
+  }
+  .metric > strong {
+    font-size: 1.375rem;
+  }
+  .option-card h3 {
+    min-height: 0;
+    font-size: 1.0625rem;
+  }
+  .option-status {
+    min-height: 0;
+    margin-bottom: 13px;
+  }
+}
+
+.stack-chart {
+  min-width: 42rem;
+}
+
+.mobile-nav-header {
+  display: none;
+}
+@media (max-width: 768px) {
+  .sidebar {
+    scroll-padding-top: 70px;
+  }
+  .mobile-nav-header {
+    display: flex;
+    justify-content: flex-end;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    margin-top: -59px;
+    margin-bottom: 15px;
+    background: white;
+  }
+  .nav-close {
+    position: static;
+  }
+  .workspace[inert] .menu-button {
+    visibility: hidden;
   }
 }

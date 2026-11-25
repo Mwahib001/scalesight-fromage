@@ -1,4 +1,4 @@
-import { useId, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 export function Icon({ name, size = 20 }: { name: string; size?: number }) {
   const paths: Record<string, ReactNode> = {
     brief: (
@@ -131,17 +131,36 @@ export function Tip({
   children: ReactNode;
 }) {
   const id = useId();
+  const [open, setOpen] = useState(false);
   return (
-    <span className="tooltip">
+    <span
+      className="tooltip"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={(event) => {
+        if (!event.currentTarget.contains(document.activeElement))
+          setOpen(false);
+      }}
+      onFocus={() => setOpen(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+      }}
+      onKeyDown={(event) => {
+        if (event.key === "Escape") {
+          setOpen(false);
+          event.stopPropagation();
+        }
+      }}
+    >
       <button
         type="button"
         className="tip-trigger"
         aria-describedby={id}
         aria-label={`Explain ${label}`}
+        onClick={() => setOpen(true)}
       >
         <Icon name="info" size={15} />
       </button>
-      <span className="tip-content" role="tooltip" id={id}>
+      <span className="tip-content" role="tooltip" id={id} hidden={!open}>
         {children}
       </span>
     </span>

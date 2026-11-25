@@ -42,7 +42,7 @@ pnpm validate
 pnpm e2e
 ```
 
-Extraction requires `pdftotext` and Python `pypdf`. Golden JSON is committed: 72 shipment rows, 288 net positions and 1,728 ledger values. Unit tests map all 20 release checks, verify literal-copy provenance, scenario transitions, strict buffer comparisons, financial summaries and colour contrast. Playwright checks all five routes at 1440, 1024, 768, 390 and 360 pixels, axe accessibility, disclosures, overflow, local-only requests, modal focus return and the live feasibility sequence. Screenshots are written to ignored `test-results/screenshots/`.
+Extraction requires `pdftotext` and Python `pypdf`. Golden JSON is committed: 72 shipment rows, 288 net positions and 1,728 ledger values. Unit tests map all 20 release checks, verify literal-copy provenance, scenario transitions, strict buffer comparisons, financial summaries and colour contrast. Playwright checks all five routes across 16 widths from 320 to 1920 pixels, 200% text sizing, short landscape navigation, mobile touch targets, axe accessibility, disclosures, overflow, local-only requests, keyboard scrolling, modal focus return and the live feasibility sequence. The expanded audit also renders all eight scenarios with both feasibility settings on every route. Screenshots are written to ignored `test-results/screenshots/`.
 
 Only `dist/` is publicly served. The PDF, extracted specification and tests stay outside that output. The eight public source links are mapped in specification-register order from PDF annotations; the ninth annotation is a duplicate Fiona profile host variant.
 

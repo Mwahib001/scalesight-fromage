@@ -1,4 +1,4 @@
-import { StrictMode, useEffect, useReducer, useState } from "react";
+import { StrictMode, useEffect, useReducer, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   BrowserRouter,
@@ -51,6 +51,12 @@ function App() {
   const [drawer, setDrawer] = useState<Drawer>(null),
     [menu, setMenu] = useState(false),
     [feedback, setFeedback] = useState("");
+  const [mobile, setMobile] = useState(
+    () => window.matchMedia("(max-width: 768px)").matches,
+  );
+  const sidebar = useRef<HTMLElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const previousPath = useRef(location.pathname);
   const actual = { ...state, ...stateFromUrl, account: state.account };
   const dispatch = (action: Action) => {
     const next = transition(actual, action);
@@ -74,16 +80,55 @@ function App() {
       nav.find((n) => n[0] === location.pathname)?.[1] ?? "Planning Brief";
     document.title = `${page} · Fromage planning workspace · Prepared by ScaleSight`;
     setMenu(false);
+    if (previousPath.current !== location.pathname) {
+      window.scrollTo(0, 0);
+      document
+        .querySelector<HTMLElement>("main h1")
+        ?.focus({ preventScroll: true });
+      previousPath.current = location.pathname;
+    }
   }, [location.pathname]);
   useEffect(() => {
-    if (!menu) return;
+    const query = window.matchMedia("(max-width: 768px)");
+    const onChange = () => {
+      setMobile(query.matches);
+      if (!query.matches) setMenu(false);
+    };
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, []);
+  useEffect(() => {
+    if (!menu || !mobile) return;
+    const openedPath = window.location.pathname;
+    const oldOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    sidebar.current?.querySelector<HTMLButtonElement>(".nav-close")?.focus();
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && !document.querySelector("dialog[open]"))
-        setMenu(false);
+      if (document.querySelector("dialog[open]")) return;
+      if (e.key === "Escape") setMenu(false);
+      if (e.key === "Tab") {
+        const items = Array.from(
+          sidebar.current?.querySelectorAll<HTMLElement>("a, button") ?? [],
+        ).filter((item) => item.getClientRects().length > 0);
+        const first = items[0],
+          last = items.at(-1);
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
     };
     document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
-  }, [menu]);
+    return () => {
+      document.removeEventListener("keydown", handler);
+      document.body.style.overflow = oldOverflow;
+      if (window.location.pathname === openedPath)
+        menuButton.current?.focus({ preventScroll: true });
+    };
+  }, [menu, mobile]);
   const activeName = scenarios.find((s) => s.id === actual.caseId)!.name;
   return (
     <Workspace.Provider
@@ -97,7 +142,24 @@ function App() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <aside className={`sidebar ${menu ? "menu-open" : ""}`}>
+      <aside
+        ref={sidebar}
+        id="planning-navigation"
+        className={`sidebar ${menu ? "menu-open" : ""}`}
+        role={mobile && menu ? "dialog" : undefined}
+        aria-modal={mobile && menu ? true : undefined}
+        aria-label={mobile && menu ? "Planning navigation" : undefined}
+        inert={mobile && !menu}
+      >
+        <div className="mobile-nav-header">
+          <button
+            className="nav-close"
+            aria-label="Close navigation"
+            onClick={() => setMenu(false)}
+          >
+            <Icon name="close" />
+          </button>
+        </div>
         <div className="brand">
           <b>Fromage</b>
           <span>Planning workspace</span>
@@ -155,12 +217,18 @@ function App() {
           </div>
         </div>
       </aside>
-      <div className="workspace">
+      <div
+        className="workspace"
+        inert={mobile && menu}
+        aria-hidden={mobile && menu ? true : undefined}
+      >
         <header className="topbar">
           <button
+            ref={menuButton}
             className="menu-button"
             aria-label={menu ? "Close navigation" : "Open navigation"}
             aria-expanded={menu}
+            aria-controls="planning-navigation"
             onClick={() => setMenu(!menu)}
           >
             <Icon name={menu ? "close" : "menu"} />
