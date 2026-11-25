@@ -1,26 +1,25 @@
 import { defineConfig } from "@playwright/test";
-import { existsSync } from "node:fs";
 export default defineConfig({
   testDir: "./tests/browser",
   fullyParallel: false,
-  workers: 1,
-  timeout: 30000,
+  workers: 2,
+  timeout: 45000,
   use: {
-    baseURL: "http://127.0.0.1:3100",
-    viewport: { width: 1440, height: 900 },
+    baseURL: process.env.PREVIEW_URL ?? "http://127.0.0.1:3100",
+    viewport: { width: 1440, height: 1000 },
     launchOptions: {
-      executablePath:
-        process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ??
-        (existsSync("/usr/bin/google-chrome")
-          ? "/usr/bin/google-chrome"
-          : undefined),
+      executablePath: "/usr/bin/google-chrome",
+      args: ["--no-sandbox"],
     },
     trace: "retain-on-failure",
   },
-  webServer: {
-    command: "node scripts/production.mjs start -p 3100",
-    url: "http://127.0.0.1:3100",
-    reuseExistingServer: false,
-    timeout: 60000,
-  },
+  webServer: process.env.PREVIEW_URL
+    ? undefined
+    : {
+        command:
+          "node node_modules/vite/bin/vite.js --host 127.0.0.1 --port 3100",
+        url: "http://127.0.0.1:3100",
+        reuseExistingServer: true,
+        timeout: 60000,
+      },
 });

@@ -11,7 +11,6 @@ for case,body in re.findall(r'\n(S[0-7])\s*\n(.*?)(?=\nS[0-7]\s*\n|Machine-reada
   for sku,n in zip(['FR-MC','FR-VB','FR-SC'],[x,y,z]): nets.append(dict(scenario=case,week=int(w),sku=sku,net=int(n)))
 c=s[s.rindex('17.C Full physical-stock and backlog'):s.rindex('17.D Phase-by-phase section')]
 ledger=[]
-for part in re.split(r'\n(S[0-7]) — SKU/week detail',c)[1:][::2]: pass
 parts=re.split(r'\n(S[0-7]) — SKU/week detail',c)
 for i in range(1,len(parts),2):
  for row in re.findall(r'\n W(\d+)\s+(FR-\w+)\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)',parts[i+1]):

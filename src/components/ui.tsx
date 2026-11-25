@@ -1,243 +1,104 @@
-import Link from "next/link";
-import Image from "next/image";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  CheckCircle2,
-  Eye,
-  GitBranch,
-  FlaskConical,
-  Info,
-  MoveRight,
-  Package,
-  TriangleAlert,
-} from "lucide-react";
-import { type Sku, type Confidence } from "../data/fishwife.v1";
-export function PageHeading({
-  eyebrow,
-  title,
-  description,
+import { useId, type ReactNode } from "react";
+export function Icon({ name, size = 20 }: { name: string; size?: number }) {
+  const paths: Record<string, ReactNode> = {
+    brief: (
+      <>
+        <path d="M7 3h10l3 3v15H4V3h3M8 8h8M8 12h8M8 16h5" />
+      </>
+    ),
+    demand: (
+      <>
+        <path d="M3 3v18h18M7 16v-5m5 5V7m5 9v-8" />
+      </>
+    ),
+    production: (
+      <>
+        <path d="m3 7 9-4 9 4-9 4-9-4Zm0 0v10l9 4 9-4V7M12 11v10" />
+      </>
+    ),
+    expansion: (
+      <>
+        <path d="M4 21V9h16v12M3 9l2-6h14l2 6M8 21v-7h8v7M2 9h20" />
+      </>
+    ),
+    options: (
+      <>
+        <path d="M4 4h16v16H4zM8 8h2m4 0h2M8 12h2m4 0h2M8 16h2m4 0h2" />
+      </>
+    ),
+    book: (
+      <>
+        <path d="M12 5c-4-3-8-1-9 0v15c3-2 6-2 9 0 3-2 6-2 9 0V5c-3-2-6-2-9 0Zm0 0v15" />
+      </>
+    ),
+    check: <path d="m5 12 4 4L19 6" />,
+    info: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 11v6m0-10v1" />
+      </>
+    ),
+    clock: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 6v6l4 2" />
+      </>
+    ),
+    close: <path d="m6 6 12 12M6 18 18 6" />,
+    menu: <path d="M4 6h16M4 12h16M4 18h16" />,
+    warning: (
+      <>
+        <path d="M12 3 2 21h20L12 3ZM12 9v5m0 3v1" />
+      </>
+    ),
+  };
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {paths[name] ?? paths.info}
+    </svg>
+  );
+}
+export function Card({
   children,
+  className = "",
 }: {
-  eyebrow?: string;
-  title: string;
-  description?: string;
-  children?: React.ReactNode;
+  children: ReactNode;
+  className?: string;
 }) {
-  return (
-    <div className="page-heading">
-      <div>
-        {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-        <h1>{title}</h1>
-        {description && <p className="page-description">{description}</p>}
-      </div>
-      {children}
-    </div>
-  );
+  return <section className={`card ${className}`}>{children}</section>;
 }
-export function SectionHeading({
-  title,
-  description,
-  children,
-}: {
-  title: string;
-  description?: string;
-  children?: React.ReactNode;
-}) {
-  return (
-    <div className="section-heading">
-      <div>
-        <h2>{title}</h2>
-        {description && <p>{description}</p>}
-      </div>
-      {children}
-    </div>
-  );
-}
-export function Badge({
-  label,
-  tone = "ink",
-}: {
-  label: string;
-  tone?: string;
-}) {
-  const Icon =
-    label.includes("HOLD") ||
-    label.includes("CONFIRMED") ||
-    label === "PROTECTED COMMITMENTS" ||
-    label === "REVIEWED RECOMMENDATION"
-      ? CheckCircle2
-      : label.includes("WATCH") || label === "MODERATE"
-        ? Eye
-        : label.includes("SPLIT")
-          ? GitBranch
-          : label.includes("RESEQUENCE") || label.includes("REALLOCATE")
-            ? MoveRight
-            : label === "ILLUSTRATIVE SCENARIO"
-              ? FlaskConical
-              : label === "PLANNING ASSUMPTION"
-                ? Info
-                : TriangleAlert;
-  return (
-    <span className={`badge badge-${tone}`}>
-      <Icon size={12} aria-hidden="true" />
-      {label}
-    </span>
-  );
-}
-export function ConfidenceValue({ value }: { value: Confidence | null }) {
-  const Icon = value === "LOW" ? TriangleAlert : Eye;
-  return value ? (
-    <span className="confidence-value">
-      <Icon size={15} aria-hidden="true" />
-      {value}
-    </span>
-  ) : (
-    "—"
-  );
-}
-export function Reviewed() {
-  return (
-    <span className="reviewed">
-      <CheckCircle2 size={13} aria-hidden="true" />
-      Reviewed by ScaleSight
-    </span>
-  );
-}
-export function Stamp() {
-  return (
-    <span className="stamp">
-      <TriangleAlert size={10} aria-hidden="true" />
-      Needs Fishwife decision
-    </span>
-  );
-}
-export function ProductImage({
-  sku,
-  large = false,
-}: {
-  sku: Sku;
-  large?: boolean;
-}) {
-  return sku.image ? (
-    <Image
-      className={`product-image ${large ? "large" : ""}`}
-      src={sku.image}
-      alt={`${sku.name} product packaging`}
-      width={large ? 250 : 88}
-      height={large ? 250 : 88}
-      unoptimized
-    />
-  ) : (
-    <span className="product-placeholder">
-      <Package size={24} />
-      <span>Product image pending</span>
-    </span>
-  );
-}
-export function PlanLink({
-  href,
-  children,
-  onNavigate,
-}: {
-  href: string;
-  children: React.ReactNode;
-  onNavigate?: () => void;
-}) {
-  return (
-    <Link className="text-link" href={href} onNavigate={onNavigate}>
-      {children}
-      <ArrowRight size={15} />
-    </Link>
-  );
-}
-export function Missing({ children }: { children?: React.ReactNode }) {
-  return (
-    <div className="missing-state">
-      <TriangleAlert size={18} />
-      <div>
-        <strong>Not specified in demo source.</strong>
-        {children && <p>{children}</p>}
-        <Link href="/assumptions#confirmation">
-          View source inputs needed
-          <ArrowUpRight size={12} />
-        </Link>
-      </div>
-    </div>
-  );
-}
-export function Metric({
-  label,
-  value,
-  unit,
-  tone,
-}: {
-  label: string;
-  value: React.ReactNode;
-  unit?: string;
-  tone?: string;
-}) {
-  return (
-    <div className={`metric ${tone ?? ""}`}>
-      <span>{label}</span>
-      <strong>
-        {value}
-        {unit && (
-          <>
-            {" "}
-            <small>{unit}</small>
-          </>
-        )}
-      </strong>
-    </div>
-  );
-}
-export function AnalystNote({
-  title = "ScaleSight recommendation",
-  children,
-}: {
-  title?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <aside className="analyst-note">
-      <span className="eyebrow">PREPARED & REVIEWED</span>
-      <h2>{title}</h2>
-      <div className="note-body">{children}</div>
-      <Reviewed />
-    </aside>
-  );
-}
-export function DataTable({
+export function Table({
   headers,
   rows,
   caption,
-  numeric = [],
-  onRowSelect,
 }: {
   headers: string[];
-  rows: React.ReactNode[][];
-  caption: string;
-  numeric?: number[];
-  onRowSelect?: (index: number) => void;
+  rows: ReactNode[][];
+  caption?: string;
 }) {
   return (
     <div
       className="table-scroll"
-      role="region"
-      aria-label={caption}
       tabIndex={0}
+      role="region"
+      aria-label={caption ?? headers.join(", ")}
     >
       <table>
-        <caption className="sr-only">{caption}</caption>
+        {caption && <caption>{caption}</caption>}
         <thead>
           <tr>
             {headers.map((h, i) => (
-              <th
-                className={numeric.includes(i) ? "numeric" : ""}
-                scope="col"
-                key={h}
-              >
+              <th scope="col" key={i}>
                 {h}
               </th>
             ))}
@@ -245,31 +106,58 @@ export function DataTable({
         </thead>
         <tbody>
           {rows.map((row, i) => (
-            <tr
-              key={i}
-              className={onRowSelect ? "selectable-row" : undefined}
-              onClick={
-                onRowSelect
-                  ? (event) => {
-                      if (
-                        !(event.target as HTMLElement).closest(
-                          "button,a,input,select",
-                        )
-                      )
-                        onRowSelect(i);
-                    }
-                  : undefined
-              }
-            >
-              {row.map((cell, j) => (
-                <td className={numeric.includes(j) ? "numeric" : ""} key={j}>
-                  {cell}
-                </td>
-              ))}
+            <tr key={i}>
+              {row.map((c, j) =>
+                j === 0 ? (
+                  <th scope="row" key={j}>
+                    {c}
+                  </th>
+                ) : (
+                  <td key={j}>{c}</td>
+                ),
+              )}
             </tr>
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+export function Tip({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
+  const id = useId();
+  return (
+    <span className="tooltip">
+      <button
+        type="button"
+        className="tip-trigger"
+        aria-describedby={id}
+        aria-label={`Explain ${label}`}
+      >
+        <Icon name="info" size={15} />
+      </button>
+      <span className="tip-content" role="tooltip" id={id}>
+        {children}
+      </span>
+    </span>
+  );
+}
+export function Note({
+  children,
+  risk = false,
+}: {
+  children: ReactNode;
+  risk?: boolean;
+}) {
+  return (
+    <div className={`note ${risk ? "risk" : ""}`}>
+      <Icon name={risk ? "warning" : "info"} size={19} />
+      <div>{children}</div>
     </div>
   );
 }

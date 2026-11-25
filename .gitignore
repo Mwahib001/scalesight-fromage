@@ -51,3 +51,4 @@ next-env.d.ts
 
 # Isolated production server snapshots
 /.production/
+/dist/
